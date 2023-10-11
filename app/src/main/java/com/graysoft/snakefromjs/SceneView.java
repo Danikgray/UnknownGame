@@ -1,18 +1,10 @@
 package com.graysoft.snakefromjs;
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.view.KeyEvent;
-import android.view.View;
-
+import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
-import android.graphics.Rect;
 
-public class SceneView{/*
+public class SceneView{
 
     static final int INITIAL_TAIL = 400;
     boolean fixedTail = false;
@@ -50,7 +42,7 @@ public class SceneView{/*
     static ActionEnum lastAction = ActionEnum.none;
 
     static Paint localPaint;
-
+/*
     public SceneView(Context context, AttributeSet attr) {
         super(context, attr);
         start(fps);
@@ -347,18 +339,6 @@ public class SceneView{/*
                            break;*
             default:
                 return;
-        }
-    }
-
- /*   static class Vector2 {
-
-        public int x = 0, y = 0;
-
-        public Vector2() {}
-
-        public Vector2(int x, int y) {
-            this.x = x;
-            this.y = y;
         }
     }*/
 }

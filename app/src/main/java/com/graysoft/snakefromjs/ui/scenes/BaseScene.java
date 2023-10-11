@@ -4,10 +4,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class BaseScene {
     
     protected SpriteBatch SceneBatch;
-    private ControlsLayoutScene controls;
+    private Base controls;
     
     public BaseScene(SpriteBatch batch){
         SceneBatch = batch;
         controls = new ControlsLayoutScene(SceneBatch);
+    }
+    
+    public void render(){
+        
     }
 }

@@ -2,27 +2,29 @@ package com.graysoft.snakefromjs;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
-import com.graysoft.snakefromjs.entity.BaseObject;
+import com.graysoft.snakefromjs.ui.scenes.BaseScene;
 
 public class MainGame extends ApplicationAdapter {
 
     private SpriteBatch batch;
+    private BaseScene ActiveScene;
     
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
+        ActiveScene = new BaseScene(batch);
 	}
 	
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();//dssdsds
-       // batch.draw(tmp,obj.getY(),-(obj.getX())+Gdx.graphics.getHeight());
-        batch.end();
+        
+        batch.begin();
+        ActiveScene.render();
+		batch.end();
 	}
 
 	@Override

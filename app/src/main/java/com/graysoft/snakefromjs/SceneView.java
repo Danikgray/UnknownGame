@@ -1,10 +1,11 @@
 package com.graysoft.snakefromjs;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SceneView{
+public class SceneView extends ApplicationAdapter{
 
     static final int INITIAL_TAIL = 400;
     boolean fixedTail = false;
@@ -41,8 +42,8 @@ public class SceneView{
 
     static ActionEnum lastAction = ActionEnum.none;
 
-    static Paint localPaint;
-/*
+   /* static Paint localPaint;
+
     public SceneView(Context context, AttributeSet attr) {
         super(context, attr);
         start(fps);

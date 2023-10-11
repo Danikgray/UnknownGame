@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+/.androidide/editor/openedFiles.json
+/.androidide/editor/openedFiles.json.bak
+/app/.androidide/editor/openedFiles.json.bak

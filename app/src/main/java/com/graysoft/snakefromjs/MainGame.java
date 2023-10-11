@@ -29,7 +29,7 @@ public class MainGame extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
-		
+		batch.dispose();
 	}
 	
 	@Override public void pause () {}

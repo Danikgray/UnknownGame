@@ -6,51 +6,45 @@ import com.badlogic.gdx.InputProcessor;
 public class InputHandler implements InputProcessor{
 
     @Override
-    public boolean keyDown(int arg0) {
+    public boolean keyDown(int keycode) {
         return false;
     }
-    
 
     @Override
-    public boolean keyUp(int arg0) {
+    public boolean keyUp(int keycode) {
         return false;
     }
-    
 
     @Override
-    public boolean keyTyped(char arg0) {
+    public boolean keyTyped(char character) {
         return false;
     }
-    
 
     @Override
-    public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
-        System.out.println("Touchdown!!"+ Gdx.graphics.getFrameId());
-        return false;
+    public boolean touchDown(int x, int y, int pointer, int button) {
+        System.out.println("TouchDown!!!!" + Gdx.graphics.getFrameId());
+        return true;
     }
-    
 
     @Override
-    public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
-        return false;
+    public boolean touchUp(int x, int y, int pointer, int button) {
+        System.out.println("TocuhUp!!!!" + Gdx.graphics.getFrameId());
+        return true;
     }
-    
 
     @Override
-    public boolean touchDragged(int arg0, int arg1, int arg2) {
-        return false;
+    public boolean touchDragged(int x, int y, int pointers) {
+        System.out.println("Dragged!!!!" + Gdx.graphics.getFrameId());
+        return true;
     }
-    
 
     @Override
-    public boolean mouseMoved(int arg0, int arg1) {
+    public boolean mouseMoved(int x, int y) {
         return false;
     }
-    
 
     @Override
-    public boolean scrolled(float arg0, float arg1) {
+    public boolean scrolled(float amountX, float amountY) {
         return false;
     }
-    
 }

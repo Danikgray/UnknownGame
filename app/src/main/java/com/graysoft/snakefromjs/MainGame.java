@@ -9,16 +9,21 @@ import com.graysoft.snakefromjs.ui.scenes.BaseScene;
 public class MainGame extends ApplicationAdapter {
 
     private SpriteBatch batch;
+
+	private InputHandler inputHandler;
     private BaseScene ActiveScene;
     
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
         ActiveScene = new BaseScene(batch);
+		inputHandler = new InputHandler();
+		Gdx.input.setInputProcessor(inputHandler);
 	}
 	
 	@Override
 	public void render () {
+		System.out.println("Render!!"+ Gdx.graphics.getFrameId());
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         

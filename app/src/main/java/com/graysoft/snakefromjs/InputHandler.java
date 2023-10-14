@@ -1,5 +1,6 @@
 package com.graysoft.snakefromjs;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
 public class InputHandler implements InputProcessor{
@@ -24,6 +25,7 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
+        System.out.println("Touchdown!!"+ Gdx.graphics.getFrameId());
         return false;
     }
     

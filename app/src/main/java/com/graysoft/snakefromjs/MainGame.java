@@ -1,7 +1,6 @@
 package com.graysoft.snakefromjs;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.graysoft.snakefromjs.ui.scenes.BaseScene;
@@ -21,9 +20,9 @@ public class MainGame extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(inputHandler);
 	}
 	
+    //Input calls at first and then its call the render method
 	@Override
 	public void render () {
-		System.out.println("Render!!"+ Gdx.graphics.getFrameId());
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         

@@ -7,10 +7,21 @@ public class BaseScene {
     
     public BaseScene(SpriteBatch batch){
         SceneBatch = batch;
-       // controls = new ControlsLayoutScene(SceneBatch);
+
     }
     
     public void render(){
+
+    }
+
+    public void touchDown(int x, int y, int pointers){
+
+    }
+
+    public void touchUp(int x, int y, int pointers){
+
+    }
+    public void touchDragged(int x, int y, int pointers){
 
     }
 }

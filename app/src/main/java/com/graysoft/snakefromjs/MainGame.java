@@ -2,23 +2,20 @@ package com.graysoft.snakefromjs;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.graysoft.snakefromjs.ui.scenes.BaseScene;
 
-public class MainGame extends ApplicationAdapter {
-
+public class MainGame extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
-
-	private InputHandler inputHandler;
     private BaseScene ActiveScene;
     
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
-        ActiveScene = new BaseScene(batch);
-		inputHandler = new InputHandler();
-		Gdx.input.setInputProcessor(inputHandler);
+        ActiveScene = new BaseScene(batch);;
+		Gdx.input.setInputProcessor(this);
 	}
 	
     //Input calls at first and then its call the render method
@@ -40,4 +37,50 @@ public class MainGame extends ApplicationAdapter {
 	@Override public void pause () {}
 	@Override public void resume () {}
 	@Override public void resize (int width, int height) {}
+
+	//Input management
+
+	@Override// controls = new ControlsLayoutScene(SceneBatch);
+	public boolean keyDown(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int x, int y, int pointer, int button) {
+		ActiveScene.touchDown(x,y,pointer);
+		return true;
+	}
+
+	@Override
+	public boolean touchUp(int x, int y, int pointer, int button) {
+		ActiveScene.touchUp(x,y,pointer);
+		return true;
+	}
+
+	@Override
+	public boolean touchDragged(int x, int y, int pointers) {
+		ActiveScene.touchDragged(x,y,pointers);
+		return true;
+	}
+
+	@Override
+	public boolean mouseMoved(int x, int y) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(float amountX, float amountY) {
+		return false;
+	}
+
 }

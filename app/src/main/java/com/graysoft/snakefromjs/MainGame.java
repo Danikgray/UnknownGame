@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
+import com.graysoft.snakefromjs.ui.elements.ImageElement;
 import com.graysoft.snakefromjs.ui.scenes.BaseScene;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
@@ -27,6 +28,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         batch.begin();
         ActiveScene.render();
 		batch.end();
+        ImageElement btn = new ImageElement();
 	}
 
 	@Override
@@ -40,7 +42,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 
 	//Input management
 
-	@Override// controls = new ControlsLayoutScene(SceneBatch);
+	@Override
 	public boolean keyDown(int keycode) {
 		return false;
 	}

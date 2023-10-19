@@ -28,7 +28,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
         batch.begin();
         ActiveScene.render();
 		batch.end();
-        ImageElement btn = new ImageElement();
 	}
 
 	@Override

@@ -17,11 +17,16 @@ public class BaseScene {
     }
     
     public void render(){
+        if(renderElements!=null || renderElements.size()<1)
+            return;
         
+        for(ImageElement element : renderElements){
+            element.render(SceneBatch);
+        }
     }
 
     public void touchDown(int x, int y, int pointers){
-
+        
     }
 
     public void touchUp(int x, int y, int pointers){

@@ -6,7 +6,15 @@ public class TouchableElement extends BaseElement{
         
      }
     
-    public void onClick(){
+    public void touchUp(){
+        
+    }
+    
+    public void touchDown(){
+        
+    }
+    
+    public void touchDragged(){
         
     }
 }

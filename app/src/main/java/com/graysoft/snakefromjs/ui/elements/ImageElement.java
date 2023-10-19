@@ -7,15 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class ImageElement extends BaseElement{
     
     private Texture baseImage;
-    protected SpriteBatch batch;
     
     public ImageElement(){
         baseImage = new Texture(Gdx.files.internal("test.png"));
-    }
-    
-    public ImageElement(SpriteBatch batch){
-        this();
-        this.batch = batch;
     }
     
     public ImageElement(Texture image){
@@ -36,12 +30,7 @@ public class ImageElement extends BaseElement{
       this.width = width;
   }
     
-    public ImageElement setBatch(SpriteBatch batch){
-        this.batch = batch;
-        return this;
-    }
-    
-    public void render(){
-        
+    public void render(SpriteBatch batch){
+        batch.draw(baseImage,x,y);
     }
 }

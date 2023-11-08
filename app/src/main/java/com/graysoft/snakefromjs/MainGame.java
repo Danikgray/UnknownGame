@@ -3,10 +3,13 @@ package com.graysoft.snakefromjs;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 import com.graysoft.snakefromjs.ui.elements.ImageElement;
 import com.graysoft.snakefromjs.ui.scenes.BaseScene;
+import com.graysoft.snakefromjs.ui.scenes.MainMenuScene;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
@@ -15,7 +18,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
-        ActiveScene = new BaseScene(batch);;
+        ActiveScene = new MainMenuScene(batch);
 		Gdx.input.setInputProcessor(this);
 	}
 	

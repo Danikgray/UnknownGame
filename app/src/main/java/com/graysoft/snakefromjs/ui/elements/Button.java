@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Button extends ImageElement{
     
-    protected TouchableElement touchAria;
-    protected ImageElement pressed;
+    public TouchableElement touchAria;
+    public ImageElement pressed;
   
 //TO-DO:
     public Button(){

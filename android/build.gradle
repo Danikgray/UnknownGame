@@ -1,7 +1,7 @@
 android {
     namespace "com.graysoft.snakefromjs"
     buildToolsVersion "33.0.2"
-    compileSdkVersion 30
+    compileSdkVersion 33
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

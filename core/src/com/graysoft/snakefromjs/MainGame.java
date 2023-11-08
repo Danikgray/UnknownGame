@@ -14,10 +14,12 @@ import com.graysoft.snakefromjs.ui.scenes.MainMenuScene;
 public class MainGame extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
     private BaseScene ActiveScene;
+	private Texture tex;
     
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
+		tex = new Texture(Gdx.files.internal("test.png"));
         ActiveScene = new MainMenuScene(batch);
 		Gdx.input.setInputProcessor(this);
 	}
@@ -29,6 +31,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
+		batch.draw(tex,0,0);
         ActiveScene.render();
 		batch.end();
 	}
@@ -69,6 +72,12 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		ActiveScene.touchUp(x,y,pointer);
 		return true;
+	}
+
+	//wtf, smth new in api?
+	@Override
+	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+		return false;
 	}
 
 	@Override

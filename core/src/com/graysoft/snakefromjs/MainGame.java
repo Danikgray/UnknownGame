@@ -68,12 +68,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		return true;
 	}
 
-	//wtf, smth new in api?
-	@Override
-	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
 	@Override
 	public boolean touchDragged(int x, int y, int pointers) {
 		ActiveScene.touchDragged(x,y,pointers);

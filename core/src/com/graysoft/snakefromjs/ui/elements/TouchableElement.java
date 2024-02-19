@@ -1,6 +1,6 @@
 package com.graysoft.snakefromjs.ui.elements;
 
-public class TouchableElement extends BaseElement{
+public class TouchableElement extends Area {
    
     public TouchableElement(){
         

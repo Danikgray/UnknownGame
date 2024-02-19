@@ -3,19 +3,21 @@ package com.graysoft.snakefromjs;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
-import com.graysoft.snakefromjs.ui.scenes.BaseScene;
-import com.graysoft.snakefromjs.ui.scenes.MainMenuScene;
+import com.graysoft.snakefromjs.ui.elements.Button;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
-    private BaseScene ActiveScene;
-	
+	private Button testbtn;
+	private Texture butnImage, unpresssed;
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
-        ActiveScene = new MainMenuScene(batch);
+		butnImage = new Texture("test.png");
+		unpresssed = new Texture("testg.png");
+		testbtn = new Button(butnImage,unpresssed);
 		Gdx.input.setInputProcessor(this);
 	}
 	
@@ -26,7 +28,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
-        ActiveScene.render();
+		testbtn.render(batch);
 		batch.end();
 	}
 
@@ -58,19 +60,16 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		ActiveScene.touchDown(x,y,pointer);
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		ActiveScene.touchUp(x,y,pointer);
 		return true;
 	}
 
 	@Override
 	public boolean touchDragged(int x, int y, int pointers) {
-		ActiveScene.touchDragged(x,y,pointers);
 		return true;
 	}
 

@@ -1,7 +1,7 @@
 package com.graysoft.snakefromjs.ui.scenes;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.graysoft.snakefromjs.ui.elements.BaseElement;
+import com.graysoft.snakefromjs.ui.elements.Area;
 import com.graysoft.snakefromjs.ui.elements.Button;
 import com.graysoft.snakefromjs.ui.elements.ImageElement;
 import com.graysoft.snakefromjs.ui.elements.TouchableElement;
@@ -21,11 +21,11 @@ public class BaseScene {
         
     }
     
-    protected void addElement(BaseElement element){
-        if(element instanceof Button){
+    protected void addElement(Area element){
+        /*if(element instanceof Button){
             touchElements.add(((Button)element).touchAria);
             renderElements.add((Button)element);
-        }
+        }*/
     }
     
     //hehehe shitcoding on the work(sorry)

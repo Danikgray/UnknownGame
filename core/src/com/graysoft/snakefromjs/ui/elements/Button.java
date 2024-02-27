@@ -14,7 +14,7 @@ public class Button {
 
     public Button(){
         pressedTexture = new Texture("test.png");
-        idleTexture = new Texture("   testg.png");
+        idleTexture = new Texture("testg.png");
         touchAria = new TouchableElement();
     }
 
@@ -36,6 +36,15 @@ public class Button {
     public void setX(float value){
         x = value;
     }
+    
+    public void setY(float value){
+        y = value;
+    }
+    
+    public void setHeight(float value){
+        height = value;
+    }
+    
     public void touchUp(){
         
     }

@@ -35,7 +35,10 @@ public class Button {
     }
 
     public void touchDown(int pointerX, int pointerY){
-        if(pointerX < x || pointerX > (x + width) && pointerY < y || pointerY > (y + height)) {
+        if ( 
+        (pointerX > x && pointerX < (x + width)) &&
+        (pointerY > y && pointerY < (y + height))
+         ) {
             pressed = true;
             action();
         }
@@ -52,14 +55,14 @@ public class Button {
     public void setY(float value){
         y = value;
     }
-    /*
+    
     public void setHeight(float value){
         height = value;
     }
 
     public void setWidth(float value){
         width = value;
-    }*/
+    }
     
 
 }

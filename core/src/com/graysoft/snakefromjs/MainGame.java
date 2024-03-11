@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.graysoft.snakefromjs.ui.elements.Button;
+import java.util.Random;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
@@ -15,9 +16,11 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 	OrthographicCamera camera;
 	private Button testbtn;
 	private Texture butnImage, unpresssed;
+    Random rand;
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
+        rand = new Random();
 		camera = new OrthographicCamera();
 		butnImage = new Texture("test.png");
 		unpresssed = new Texture("testg.png");
@@ -25,8 +28,18 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 			@Override
 			public void action(){
 				System.out.println("clicked!");
+                this.setX(rand.nextInt(1000));
+             //   Button bruh = new Button();
+           //     bruh.setX(rand.nextInt(1000));
+            //    bruh.setY(-(rand.nextInt(100)-1000));
+           //     bruh.setHeight(rand.nextInt(100)+50);
+            //    bruh.setWidth(rand.nextInt(100)+50);
 			}
 		};
+        testbtn.setX(Gdx.graphics.getWidth()/2);
+        testbtn.setY(-((Gdx.graphics.getHeight()/2)-Gdx.graphics.getHeight()));
+        testbtn.setWidth(400);
+        testbtn.setHeight(400);
 		Gdx.input.setInputProcessor(this);
 	}
 	
@@ -37,11 +50,11 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
-		batch.setProjectionMatrix(camera.combined);
+	//	batch.setProjectionMatrix(camera.combined);
 		//TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
-		//TODO: somehow sunhronize my ui coordinates with graphical
-        testbtn.setX(Gdx.input.getX());
-		testbtn.setY(-(Gdx.input.getY()-Gdx.graphics.getHeight()));
+		//TODO: somehow synhronize my ui coordinates with graphical
+      //  testbtn.setX(Gdx.input.getX());
+	//	testbtn.setY(-(Gdx.input.getY()-Gdx.graphics.getHeight()));
 
         batch.begin();
 		testbtn.render(batch);
@@ -78,7 +91,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		testbtn.touchDown(x, y);
+		testbtn.touchDown(x, -(y-Gdx.graphics.getHeight()));
 		return true;
 	}
 

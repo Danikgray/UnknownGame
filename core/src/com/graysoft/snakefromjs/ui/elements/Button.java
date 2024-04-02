@@ -3,8 +3,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Button {
-    private float x = 0, y = 0,
-            height = 100, width = 100;
+    protected float x = 0;
+    protected float y = 0;
+    private float height = 100;
+    private float width = 100;
     public Texture pressedTexture,idleTexture;
 
     private boolean pressed = false;
@@ -49,7 +51,7 @@ public class Button {
     }
 
     public void touchDragged(int pointerX, int pointerY){
-        if (pressed)
+        if (pressed||canBeDragged)
         actionDrag(pointerX, pointerY);
     }
 

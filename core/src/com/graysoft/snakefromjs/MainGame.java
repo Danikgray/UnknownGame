@@ -16,6 +16,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 	OrthographicCamera camera;
 	private Button testbtn;
 	private Texture butnImage, unpresssed;
+	private int TouchX, TouchY, oldX, oldY;
     Random rand;
 	@Override
 	public void create () {
@@ -26,13 +27,12 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		unpresssed = new Texture("testg.png");
 		testbtn = new Button(butnImage,unpresssed){
 			@Override
-			public void action(){
-				System.out.println("clicked!");
-                this.setX(rand.nextInt(10));
+			public void actionDrag(int x, int y){
+				this.x-= (oldX - TouchX);
+				this.y-= (oldY - TouchY);
 			}
 		};
         testbtn.setX(Gdx.graphics.getWidth()/2);
-		//testbtn.setY(Gdx.graphics.getHeight()/2);
         testbtn.setY(Gdx.graphics.getHeight()/2);
         testbtn.setWidth(100);
         testbtn.setHeight(100);
@@ -44,13 +44,14 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 	public void render () {
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		oldX = TouchX;
+		oldY = TouchY;
+		TouchX = Gdx.input.getX();
+		TouchY = -(Gdx.input.getY()-Gdx.graphics.getHeight());
 		camera.update();
 		//batch.setProjectionMatrix(camera.combined);
 		//TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
 		//TODO: somehow synhronize my ui coordinates with graphical
-      //  testbtn.setX(Gdx.input.getX());
-	//	testbtn.setY(-(Gdx.input.getY()-Gdx.graphics.getHeight()));
 
         batch.begin();
 		testbtn.render(batch);

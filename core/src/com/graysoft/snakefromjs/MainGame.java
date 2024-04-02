@@ -33,7 +33,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		};
         testbtn.setX(Gdx.graphics.getWidth()/2);
 		//testbtn.setY(Gdx.graphics.getHeight()/2);
-        testbtn.setY(-((Gdx.graphics.getHeight()/2)-Gdx.graphics.getHeight()));
+        testbtn.setY(Gdx.graphics.getHeight()/2);
         testbtn.setWidth(100);
         testbtn.setHeight(100);
 		Gdx.input.setInputProcessor(this);
@@ -100,6 +100,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int x, int y, int pointers) {
+        testbtn.touchDragged(x,y);
 		return true;
 	}
 

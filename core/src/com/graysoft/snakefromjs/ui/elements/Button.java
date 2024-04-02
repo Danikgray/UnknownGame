@@ -8,6 +8,8 @@ public class Button {
     public Texture pressedTexture,idleTexture;
 
     private boolean pressed = false;
+    
+    private boolean canBeDragged = false;
 
     public Button(){
         pressedTexture = new Texture("test.png");
@@ -23,8 +25,13 @@ public class Button {
     public void render(SpriteBatch batch){
             batch.draw(pressed ? pressedTexture : idleTexture, x, y, width, height);
     }
+    
     public void action(){
 
+    }
+    
+    public void actionDrag(int pX,int pY){
+        
     }
 
     public void touchUp(){
@@ -41,8 +48,9 @@ public class Button {
 
     }
 
-    public void touchDragged(){
-
+    public void touchDragged(int pointerX, int pointerY){
+        if (pressed)
+        actionDrag(pointerX, pointerY);
     }
 
     public void setX(float value){

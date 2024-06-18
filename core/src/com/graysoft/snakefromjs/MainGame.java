@@ -8,20 +8,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.graysoft.snakefromjs.ui.elements.Button;
-import java.util.Random;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
 
-	OrthographicCamera camera;
+//	OrthographicCamera camera;//will fixed the resizing in future
 	private Button testbtn;
 	private Texture butnImage, unpresssed;
-    Random rand;
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
-        rand = new Random();
-		camera = new OrthographicCamera();
+	//	camera = new OrthographicCamera();
 		butnImage = new Texture("test.png");
 		unpresssed = new Texture("testg.png");
 		testbtn = new Button(butnImage,unpresssed,batch){
@@ -38,7 +35,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 	public void render () {
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();
+	//	camera.update();
 		//batch.setProjectionMatrix(camera.combined);
 		//TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
 		//TODO: somehow synhronize my ui coordinates with graphical

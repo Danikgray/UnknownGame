@@ -7,18 +7,22 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.ui.elements.Button;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
 
-//	OrthographicCamera camera;//will fixed the resizing in future
+	OrthographicCamera camera;//will fixe the resizing in the future
+	Viewport view;
 	private Button testbtn;
 	private Texture butnImage, unpresssed;
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
-	//	camera = new OrthographicCamera();
+		camera = new OrthographicCamera();
+		view = new ExtendViewport(800,480,camera);
 		butnImage = new Texture("test.png");
 		unpresssed = new Texture("testg.png");
 		testbtn = new Button(butnImage,unpresssed,batch){
@@ -35,8 +39,9 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 	public void render () {
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	//	camera.update();
-		//batch.setProjectionMatrix(camera.combined);
+		camera.update();
+		view.apply();
+		batch.setProjectionMatrix(camera.combined);
 		//TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
 		//TODO: somehow synhronize my ui coordinates with graphical
 
@@ -53,7 +58,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 	@Override public void pause () {}
 	@Override public void resume () {}
 	@Override public void resize (int width, int height) {
-		//camera.
+		view.update(width,height,true);
 	}
 
 	//Input management

@@ -43,7 +43,7 @@ public class Button {
         pressed = false;
     }
 
-    public void touchDown(int pointerX, int pointerY){
+    public void touchDown(float pointerX, float pointerY){
         if ((pointerX > x && pointerX < (x + width)) &&
             (pointerY > y && pointerY < (y + height)))
         {

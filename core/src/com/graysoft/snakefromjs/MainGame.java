@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.ui.elements.Button;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
-
 	OrthographicCamera camera;//will fixe the resizing in the future
 	Viewport view;
 	private Button testbtn;
@@ -25,8 +25,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		view = new ExtendViewport(800,480,camera);
 		butnImage = new Texture("test.png");
 		unpresssed = new Texture("testg.png");
-		testbtn = new Button(butnImage,unpresssed,batch){
-		};
+		testbtn = new Button(butnImage,unpresssed,batch);
         testbtn.setX(Gdx.graphics.getWidth()/2);
         testbtn.setY(Gdx.graphics.getHeight()/2);
         testbtn.setWidth(100);
@@ -44,7 +43,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		batch.setProjectionMatrix(camera.combined);
 		//TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
 		//TODO: somehow synhronize my ui coordinates with graphical
-
         batch.begin();
 		testbtn.render();
 		batch.end();
@@ -80,7 +78,9 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		testbtn.touchDown(x, -(y-Gdx.graphics.getHeight()));
+		Vector2 cord = view.unproject(new Vector2(x,y));
+		testbtn.touchDown(cord.x, cord.y);
+		System.out.println(cord);
 		return true;
 	}
 

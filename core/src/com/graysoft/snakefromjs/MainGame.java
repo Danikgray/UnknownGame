@@ -26,8 +26,8 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		butnImage = new Texture("test.png");
 		unpresssed = new Texture("testg.png");
 		testbtn = new Button(butnImage,unpresssed,batch);
-        testbtn.setX(Gdx.graphics.getWidth()/2);
-        testbtn.setY(Gdx.graphics.getHeight()/2);
+        testbtn.setX(800/2);
+        testbtn.setY(480/2);
         testbtn.setWidth(100);
         testbtn.setHeight(100);
 		Gdx.input.setInputProcessor(this);

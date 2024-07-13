@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
@@ -15,14 +16,24 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.ui.elements.Button;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor {
-    private SpriteBatch batch;
+
+	private SpriteBatch batch;
+
 	OrthographicCamera camera;//will fix resizing in the future
+
 	Viewport view;
+
 	int x,y, OldX,OldY;
-	private Button testbtn, secondBtn;
+
+	private static Button testbtn, secondBtn;
+
 	private Texture butnImage, unpresssed;
+
+	private BitmapFont font;
+
 	@Override
 	public void create () {
+		font =  new BitmapFont();
 	    batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		view = new ExtendViewport(800,480,camera);
@@ -52,6 +63,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		//TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
 		//TODO: somehow synhronize my ui coordinates with graphical
         batch.begin();
+		font.draw(batch,"BRUH", 100,100);
 		testbtn.render();
 		secondBtn.render();
 		batch.end();

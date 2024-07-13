@@ -2,19 +2,27 @@ package com.graysoft.snakefromjs;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Snake extends ApplicationAdapter{
+public class Snake extends ApplicationAdapter implements InputProcessor {
+
+    private Texture snakeTexture,wallsTexture, appleTexture;
+    private BitmapFont font;
+
 
     static final int INITIAL_TAIL = 400;
-    boolean fixedTail = false;
+    //boolean fixedTail = false;
 
-    static int tileCount = 4;
+    static int tileCount = 6;
     int gridSize = 400 / tileCount;
 
     static final Vector2 INITIAL_PLAYER = new Vector2(tileCount / 2, tileCount / 2);
@@ -33,9 +41,6 @@ public class Snake extends ApplicationAdapter{
     static int points = 0;
     int pointsMax = 0;
 
-    static int fps = 1;
-    public boolean runned = false;
-
     enum ActionEnum {
         none,
         up,
@@ -49,8 +54,17 @@ public class Snake extends ApplicationAdapter{
     public SpriteBatch localPaint;
 
     public Snake() {
-        start(fps);
         reset();
+    }
+
+    @Override
+    public void create() {
+        font = new BitmapFont();
+        localPaint = new SpriteBatch();
+        snakeTexture = new Texture("test.png");
+        wallsTexture = new Texture("testg.png");
+        appleTexture = new Texture("apple.png");
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -61,83 +75,66 @@ public class Snake extends ApplicationAdapter{
         Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        localPaint.begin();
+
         if (walls) {
-            localPaint.setColor(Color.LTGRAY);
-            canvas.drawRect(0, 0, gridSize - 1, getHeight(), localPaint);
-            canvas.drawRect(0, 0, getWidth(), gridSize - 1, localPaint);
-            canvas.drawRect(getWidth() - gridSize + 1, 0, gridSize, getHeight(), localPaint);
-            canvas.drawRect(0, getHeight() - gridSize + 1, getWidth(), gridSize, localPaint);
+            //walls
+            localPaint.draw(wallsTexture,0, 0, gridSize - 1, Gdx.graphics.getHeight());
+            localPaint.draw(wallsTexture,0, 0, Gdx.graphics.getWidth(), gridSize - 1);
+            localPaint.draw(wallsTexture,Gdx.graphics.getWidth() - gridSize + 1, 0, gridSize, Gdx.graphics.getHeight());
+            localPaint.draw(wallsTexture,0, Gdx.graphics.getHeight() - gridSize + 1, Gdx.graphics.getWidth(), gridSize);
         }
         if (!stopped) {
-
-            localPaint.setARGB(51, 200, 200, 200);
-            canvas.drawText("(esc) reset", 24, 356, localPaint);
-            canvas.drawText("(space) pause", 24, 374, localPaint);
+            //some text
+            font.setColor(0.2f, 0.8f, 0.8f, 0.8f);
+            font.draw(localPaint,"(esc) reset", 24, 356);
+            font.draw(localPaint,"(space) pause", 24, 374);
         }
-        localPaint.setColor(Color.rgb(0, 255, 111));
-
+        //snake color
         for (int i = 0; i < trail.size() - 1; i++) {
-            Rect r = new Rect(0, 0, gridSize - 2, gridSize - 2);
-            r.offset(trail.get(i).x * gridSize + 1, trail.get(i).y * gridSize + 1);
-            canvas.drawRect(r, localPaint);
+            localPaint.draw(snakeTexture,trail.get(i).x * gridSize + 1,
+                    trail.get(i).y * gridSize + 1,gridSize - 2,gridSize - 2);
             //  ctx.fillRect(trail[i].x * gridSize+1, trail[i].y * gridSize+1, gridSize-2,
             // gridSize-2);
 
             // console.debug(i + ' => player:' + player.x, player.y + ', trail:' + trail[i].x,
-            // trail[i].y);
-            localPaint.setColor(Color.GREEN);
+            // trail[i].y);x
             //  ctx.fillStyle = 'lime';
         }
 
-        Rect r = new Rect(0, 0, gridSize - 2, gridSize - 2);
-        r.offset(
-                trail.get(trail.size() - 1).x * gridSize + 1,
-                trail.get(trail.size() - 1).y * gridSize + 1);
-        canvas.drawRect(r, localPaint);
+        localPaint.draw(snakeTexture,trail.get(trail.size() - 1).x * gridSize + 1,trail.get(trail.size() - 1).y * gridSize + 1,gridSize - 2,gridSize - 2);
         //  ctx.fillRect(trail[trail.length-1].x * gridSize+1, trail[trail.length-1].y * gridSize+1,
         // gridSize-2, gridSize-2);
 
-        localPaint.setColor(Color.RED);
         //   ctx.fillStyle = 'red';
-        Rect red = new Rect(0, 0, gridSize - 2, gridSize - 2);
-        red.offset(fruit.x * gridSize + 1, fruit.y * gridSize + 1);
-        canvas.drawRect(red, localPaint);
+        localPaint.draw(appleTexture,fruit.x * gridSize + 1,fruit.y * gridSize + 1,gridSize - 2,gridSize - 2);
         // ctx.fillRect(fruit.x * gridSize+1, fruit.y * gridSize+1, gridSize-2, gridSize-2);
 
         if (stopped) {
-            localPaint.setColor(Color.argb(200, 250, 250, 250));
+            font.setColor(1, 1, 1, 0.8f);
             //  ctx.fillStyle = 'rgba(250,250,250,0.8)';
             //     ctx.font = "small-caps bold 14px Helvetica";
-            canvas.drawText("press ARROW KEYS to START...", 24, 374, localPaint);
+            font.draw(localPaint,"press ARROW KEYS to START...", 24, 374);
             //   ctx.fillText("press ARROW KEYS to START...", 24, 374);
         }
-        localPaint.setColor(Color.WHITE);
-        canvas.drawText("points: " + points, 248, 40, localPaint);
-        canvas.drawText("top: " + pointsMax, 252, 60, localPaint);
+        font.setColor(Color.WHITE);
+        font.draw(localPaint,"points: " + points, 248, 40);
+        font.draw(localPaint,"top: " + pointsMax, 252, 60);
 
-        ctx.fillStyle = 'white';
+       /* ctx.fillStyle = 'white';
         ctx.font = "bold small-caps 16px Helvetica";
         ctx.fillText("points: " + points, 288, 40);
-        ctx.fillText("top: " + pointsMax, 292, 60);
+        ctx.fillText("top: " + pointsMax, 292, 60);*/
 
         //      log(canvas);
-        Paint p = new Paint();
+      /*  Paint p = new Paint();
         p.setColor(Color.WHITE);
-        canvas.drawRect(50, 50, 50, 100, p);
-    }
-
-    void start(int fps) {
-        this.fps = fps;
-        new Thread(this).start();
-    }
-
-    void stop() {
-        runned = false;
+        canvas.drawRect(50, 50, 50, 100, p)*/;
+        update();
+        localPaint.end();
     }
 
     static void reset() {
-        localPaint = new Paint();
-        localPaint.setColor(Color.LTGRAY);
         // reset game fields
         tail = INITIAL_TAIL;
         points = 0;
@@ -196,7 +193,7 @@ public class Snake extends ApplicationAdapter{
         }
     }
 
-    void log(Canvas canvas) {
+   /* void log(Canvas canvas) {
         Paint p = new Paint();
         p.setColor(Color.WHITE);
         canvas.drawText("====================", 150, 200, p);
@@ -208,58 +205,58 @@ public class Snake extends ApplicationAdapter{
                     150,
                     300 + (20 * i),
                     p);
-    }
+    }*/
 
-    float loop() {
+    public float update() {
+        if(Gdx.graphics.getFrameId()%60 == 0) {
+            reward = -0.1f;
 
-        reward = -0.1f;
+            boolean stopped = velocity.x == 0 && velocity.y == 0;
 
-        boolean stopped = velocity.x == 0 && velocity.y == 0;
+            player.x += velocity.x;
+            player.y += velocity.y;
 
-        player.x += velocity.x;
-        player.y += velocity.y;
+            if (velocity.x == 0 && velocity.y == -1) lastAction = ActionEnum.up;
+            if (velocity.x == 0 && velocity.y == 1) lastAction = ActionEnum.down;
+            if (velocity.x == -1 && velocity.y == 0) lastAction = ActionEnum.left;
+            if (velocity.x == 1 && velocity.y == 0) lastAction = ActionEnum.right;
 
-        if (velocity.x == 0 && velocity.y == -1) lastAction = ActionEnum.up;
-        if (velocity.x == 0 && velocity.y == 1) lastAction = ActionEnum.down;
-        if (velocity.x == -1 && velocity.y == 0) lastAction = ActionEnum.left;
-        if (velocity.x == 1 && velocity.y == 0) lastAction = ActionEnum.right;
+            if (walls) {
+                if (player.x < 1) reset();
+                if (player.x > tileCount - 2) reset();
+                if (player.y < 1) reset();
+                if (player.y > tileCount - 2) reset();
+            } else {
+                if (player.x < 0) player.x = tileCount - 1;
+                if (player.x >= tileCount) player.x = 0;
+                if (player.y < 0) player.y = tileCount - 1;
+                if (player.y >= tileCount) player.y = 0;
+            }
+            // game.log();
+            if (!stopped) {
+                Vector2 p = new Vector2(player.x, player.y);
+                trail.add(p);
+                while (trail.size() > tail) trail.remove(0);
+            }
+            for (int i = 0; i < trail.size() - 1; i++) {
 
-        if (walls) {
-            if (player.x < 1) reset();
-            if (player.x > tileCount - 2) reset();
-            if (player.y < 1) reset();
-            if (player.y > tileCount - 2) reset();
-            localPaint.setColor(Color.LTGRAY);
-        } else {
-            if (player.x < 0) player.x = tileCount - 1;
-            if (player.x >= tileCount) player.x = 0;
-            if (player.y < 0) player.y = tileCount - 1;
-            if (player.y >= tileCount) player.y = 0;
-        }
-        // game.log();
-        if (!stopped) {
-            Vector2 p = new Vector2(player.x, player.y);
-            trail.add(p);
-            while (trail.size() > tail) trail.remove(0);
-        }
-        for (int i = 0; i < trail.size() - 1; i++) {
-
-            // console.debug(i + ' => player:' + player.x, player.y + ', trail:' + trail[i].x,
-            // trail[i].y);
-            if (!stopped && trail.get(i).x == player.x && trail.get(i).y == player.y) {
-                reset();
+                // console.debug(i + ' => player:' + player.x, player.y + ', trail:' + trail[i].x,
+                // trail[i].y);
+                if (!stopped && trail.get(i).x == player.x && trail.get(i).y == player.y) {
+                    reset();
+                }
+            }
+            if (player.x == fruit.x && player.y == fruit.y) {
+                // if (!fixedTail)
+                tail++;
+                points++;
+                if (points > pointsMax) pointsMax = points;
+                reward = 1;
+                RandomFruit();
+                // make sure new fruit didn't spawn in snake tail
+                while (checkFruitInSnake()) ;
             }
         }
-        if (player.x == fruit.x && player.y == fruit.y) {
-            if (!fixedTail) tail++;
-            points++;
-            if (points > pointsMax) pointsMax = points;
-            reward = 1;
-            RandomFruit();
-            // make sure new fruit didn't spawn in snake tail
-            while (checkFruitInSnake()) {}
-        }
-        postInvalidate();
         return reward;
     }
 
@@ -273,12 +270,13 @@ public class Snake extends ApplicationAdapter{
         return false;
     }
 
-    static void pause() {
+    @Override
+    public void pause() {
         velocity.x = 0;
         velocity.y = 0;
     }
 
-    void keyPush(KeyEvent evt) {
+   /* void keyPush(KeyEvent evt) {
         switch (evt.getKeyCode()) {
             case KeyEvent.KEYCODE_A: // left
                 action(ActionEnum.left);
@@ -303,46 +301,70 @@ public class Snake extends ApplicationAdapter{
                 reset();
                 break;
         }
+    }*/
+
+    @Override
+    public boolean keyDown(int keycode) {
+        switch (keycode) {
+            case Input.Keys.DOWN:
+                action(ActionEnum.up);
+                break;
+            case Input.Keys.UP:
+                action(ActionEnum.down);
+                break;
+            case Input.Keys.LEFT:
+                action(ActionEnum.left);
+                break;
+            case Input.Keys.RIGHT:
+                action(ActionEnum.right);
+                break;
+            case Input.Keys.G:
+                RandomFruit();
+                break;
+            case Input.Keys.ESCAPE:
+                reset();
+                break;
+            case Input.Keys.SPACE:
+                // pause();
+                break;
+            default:
+                return false;
+        }
+        return false;
     }
 
     @Override
-    public void run() {
-        runned = true;
-        while (runned) {
-            loop();
-            try {
-                Thread.sleep(1000 / fps);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public boolean keyUp(int keycode) {
+        return false;
     }
 
-    public static void ButtonClicked(View v) {
-        switch (v.getId()) {
-            case R.id.up:
-                action(ActionEnum.up);
-                break;
-            case R.id.down:
-                action(ActionEnum.down);
-                break;
-            case R.id.left:
-                action(ActionEnum.left);
-                break;
-            case R.id.right:
-                action(ActionEnum.right);
-                break;
-            case R.id.spawnFruit:
-                RandomFruit();
-                break; /*
-                       case R.id.reset:
-                           reset();
-                           break;
-                       case R.id.pause:
-                          // pause();
-                           break;*
-            default:
-                return;
-        }
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
     }
 }

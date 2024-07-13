@@ -1,11 +1,15 @@
 package com.graysoft.snakefromjs;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SceneView extends ApplicationAdapter{
+public class Snake extends ApplicationAdapter{
 
     static final int INITIAL_TAIL = 400;
     boolean fixedTail = false;
@@ -42,21 +46,20 @@ public class SceneView extends ApplicationAdapter{
 
     static ActionEnum lastAction = ActionEnum.none;
 
-   /* static Paint localPaint;
+    public SpriteBatch localPaint;
 
-    public SceneView(Context context, AttributeSet attr) {
-        super(context, attr);
+    public Snake() {
         start(fps);
         reset();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    public void render() {
 
         boolean stopped = velocity.x == 0 && velocity.y == 0;
 
-        canvas.drawColor(Color.argb(120, 40, 40, 40));
+        Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (walls) {
             localPaint.setColor(Color.LTGRAY);
@@ -111,12 +114,12 @@ public class SceneView extends ApplicationAdapter{
         localPaint.setColor(Color.WHITE);
         canvas.drawText("points: " + points, 248, 40, localPaint);
         canvas.drawText("top: " + pointsMax, 252, 60, localPaint);
-        /*
+
         ctx.fillStyle = 'white';
         ctx.font = "bold small-caps 16px Helvetica";
         ctx.fillText("points: " + points, 288, 40);
         ctx.fillText("top: " + pointsMax, 292, 60);
-        *
+
         //      log(canvas);
         Paint p = new Paint();
         p.setColor(Color.WHITE);
@@ -341,5 +344,5 @@ public class SceneView extends ApplicationAdapter{
             default:
                 return;
         }
-    }*/
+    }
 }

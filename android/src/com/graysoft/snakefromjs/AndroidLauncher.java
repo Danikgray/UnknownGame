@@ -11,7 +11,7 @@ public class AndroidLauncher extends AndroidApplication{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-        initialize(new MainGame(), cfg);
+        initialize(new Snake(), cfg);
     }
     
     protected void onResume() {

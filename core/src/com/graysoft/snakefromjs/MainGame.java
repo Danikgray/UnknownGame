@@ -55,8 +55,8 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
     //Input calls at first and then its call the render method
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	//	Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
+	//	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		view.apply();
 		batch.setProjectionMatrix(camera.combined);

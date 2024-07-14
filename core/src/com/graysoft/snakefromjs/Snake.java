@@ -33,6 +33,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     static boolean walls = false;
 
     static Vector2 fruit = new Vector2(1, 1);
+    MainGame main;
 
     static List<Vector2> trail = new ArrayList<Vector2>();
     static int tail = INITIAL_TAIL;
@@ -59,12 +60,14 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public void create() {
+        main = new MainGame();
+        main.create();
         font = new BitmapFont();
         localPaint = new SpriteBatch();
         snakeTexture = new Texture("test.png");
         wallsTexture = new Texture("testg.png");
         appleTexture = new Texture("apple.png");
-        Gdx.input.setInputProcessor(this);
+   //     Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -132,6 +135,12 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         canvas.drawRect(50, 50, 50, 100, p)*/;
         update();
         localPaint.end();
+        main.render();
+    }
+    
+    @Override
+    public void resize(int a, int b){
+        main.resize(a,b);
     }
 
     static void reset() {

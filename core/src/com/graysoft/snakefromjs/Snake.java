@@ -15,11 +15,12 @@ import java.util.List;
 
 public class Snake extends ApplicationAdapter implements InputProcessor {
 
+    //Textures and font
     private Texture snakeTexture,wallsTexture, appleTexture;
     private BitmapFont font;
 
 
-    static final int INITIAL_TAIL = 400;
+    static final int INITIAL_TAIL = 1;
     //boolean fixedTail = false;
 
     static int tileCount = 6;
@@ -67,7 +68,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         snakeTexture = new Texture("test.png");
         wallsTexture = new Texture("testg.png");
         appleTexture = new Texture("apple.png");
-   //     Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -97,42 +98,21 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         for (int i = 0; i < trail.size() - 1; i++) {
             localPaint.draw(snakeTexture,trail.get(i).x * gridSize + 1,
                     trail.get(i).y * gridSize + 1,gridSize - 2,gridSize - 2);
-            //  ctx.fillRect(trail[i].x * gridSize+1, trail[i].y * gridSize+1, gridSize-2,
-            // gridSize-2);
-
-            // console.debug(i + ' => player:' + player.x, player.y + ', trail:' + trail[i].x,
-            // trail[i].y);x
-            //  ctx.fillStyle = 'lime';
         }
 
-        localPaint.draw(snakeTexture,trail.get(trail.size() - 1).x * gridSize + 1,trail.get(trail.size() - 1).y * gridSize + 1,gridSize - 2,gridSize - 2);
-        //  ctx.fillRect(trail[trail.length-1].x * gridSize+1, trail[trail.length-1].y * gridSize+1,
-        // gridSize-2, gridSize-2);
-
-        //   ctx.fillStyle = 'red';
-        localPaint.draw(appleTexture,fruit.x * gridSize + 1,fruit.y * gridSize + 1,gridSize - 2,gridSize - 2);
-        // ctx.fillRect(fruit.x * gridSize+1, fruit.y * gridSize+1, gridSize-2, gridSize-2);
+        localPaint.draw(snakeTexture,trail.get(trail.size() - 1).x * gridSize + 1,trail.get(trail.size() - 1).y * gridSize + 1,
+                gridSize - 2,gridSize - 2);
+        localPaint.draw(appleTexture,fruit.x * gridSize + 1,fruit.y * gridSize + 1,
+                gridSize - 2,gridSize - 2);
 
         if (stopped) {
             font.setColor(1, 1, 1, 0.8f);
-            //  ctx.fillStyle = 'rgba(250,250,250,0.8)';
-            //     ctx.font = "small-caps bold 14px Helvetica";
             font.draw(localPaint,"press ARROW KEYS to START...", 24, 374);
-            //   ctx.fillText("press ARROW KEYS to START...", 24, 374);
         }
         font.setColor(Color.WHITE);
         font.draw(localPaint,"points: " + points, 248, 40);
         font.draw(localPaint,"top: " + pointsMax, 252, 60);
 
-       /* ctx.fillStyle = 'white';
-        ctx.font = "bold small-caps 16px Helvetica";
-        ctx.fillText("points: " + points, 288, 40);
-        ctx.fillText("top: " + pointsMax, 292, 60);*/
-
-        //      log(canvas);
-      /*  Paint p = new Paint();
-        p.setColor(Color.WHITE);
-        canvas.drawRect(50, 50, 50, 100, p)*/;
         update();
         localPaint.end();
         main.render();
@@ -202,22 +182,8 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         }
     }
 
-   /* void log(Canvas canvas) {
-        Paint p = new Paint();
-        p.setColor(Color.WHITE);
-        canvas.drawText("====================", 150, 200, p);
-        canvas.drawText("x" + player.x + ", y:" + player.y, 150, 240, p);
-        canvas.drawText("tail:" + tail + ", trail.length:" + trail.size(), 150, 280, p);
-        for (int i = 0; trail.size() > i; i++)
-            canvas.drawText(
-                    i + " trails x and y's = " + trail.get(i).x + "  " + trail.get(i).y,
-                    150,
-                    300 + (20 * i),
-                    p);
-    }*/
-
     public float update() {
-        if(Gdx.graphics.getFrameId()%60 == 0) {
+        if(Gdx.graphics.getFrameId()%30 == 0) {
             reward = -0.1f;
 
             boolean stopped = velocity.x == 0 && velocity.y == 0;
@@ -241,7 +207,6 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 if (player.y < 0) player.y = tileCount - 1;
                 if (player.y >= tileCount) player.y = 0;
             }
-            // game.log();
             if (!stopped) {
                 Vector2 p = new Vector2(player.x, player.y);
                 trail.add(p);
@@ -249,8 +214,6 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
             }
             for (int i = 0; i < trail.size() - 1; i++) {
 
-                // console.debug(i + ' => player:' + player.x, player.y + ', trail:' + trail[i].x,
-                // trail[i].y);
                 if (!stopped && trail.get(i).x == player.x && trail.get(i).y == player.y) {
                     reset();
                 }
@@ -334,7 +297,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 reset();
                 break;
             case Input.Keys.SPACE:
-                // pause();
+                pause();
                 break;
             default:
                 return false;

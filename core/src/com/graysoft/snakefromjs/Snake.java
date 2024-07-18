@@ -15,11 +15,13 @@ import java.util.List;
 
 public class Snake extends ApplicationAdapter implements InputProcessor {
 
+    public SpriteBatch localPaint;
     //Textures and font
     private Texture snakeTexture,wallsTexture, appleTexture;
     private BitmapFont font;
 
-
+    //UI layout
+    MainGame main;
     static final int INITIAL_TAIL = 1;
     //boolean fixedTail = false;
 
@@ -30,11 +32,10 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     static Vector2 velocity = new Vector2();
     static Vector2 player = new Vector2();
-
+    //looped grid or just walls
     static boolean walls = false;
 
     static Vector2 fruit = new Vector2(1, 1);
-    MainGame main;
 
     static List<Vector2> trail = new ArrayList<Vector2>();
     static int tail = INITIAL_TAIL;
@@ -53,14 +54,9 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     static ActionEnum lastAction = ActionEnum.none;
 
-    public SpriteBatch localPaint;
-
-    public Snake() {
-        reset();
-    }
-
     @Override
     public void create() {
+        reset();
         main = new MainGame();
         main.create();
         font = new BitmapFont();

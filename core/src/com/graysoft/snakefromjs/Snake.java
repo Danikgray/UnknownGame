@@ -22,13 +22,14 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     //UI layout
     MainGame main;
+
     static final int INITIAL_TAIL = 1;
     //boolean fixedTail = false;
 
     static int tileCount = 6;
     int gridSize = 400 / tileCount;
 
-    static final Vector2 INITIAL_PLAYER = new Vector2(tileCount / 2, tileCount / 2);
+    static final int[] INITIAL_PLAYER = {tileCount / 2, tileCount / 2};
 
     static Vector2 velocity = new Vector2();
     static Vector2 player = new Vector2();
@@ -37,10 +38,9 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     static Vector2 fruit = new Vector2(1, 1);
 
-    static List<Vector2> trail = new ArrayList<Vector2>();
+    static List<Vector2> trail = new ArrayList<>();
     static int tail = INITIAL_TAIL;
 
-    static float reward = 0;
     static int points = 0;
     int pointsMax = 0;
 
@@ -125,16 +125,13 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         points = 0;
         velocity.x = 0;
         velocity.y = 0;
-        player.x = INITIAL_PLAYER.x;
-        player.y = INITIAL_PLAYER.y;
-
-        reward = -1;
+        player.x = INITIAL_PLAYER[0];
+        player.y = INITIAL_PLAYER[1];
 
         lastAction = ActionEnum.none;
 
-        trail = new ArrayList<Vector2>();
-        Vector2 p = new Vector2(player.x, player.y);
-        trail.add(p);
+        trail = new ArrayList<>();
+        trail.add(new Vector2(player.x, player.y));
     }
 
     static void action(ActionEnum action) {
@@ -178,9 +175,8 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         }
     }
 
-    public float update() {
+    public void update() {
         if(Gdx.graphics.getFrameId()%30 == 0) {
-            reward = -0.1f;
 
             boolean stopped = velocity.x == 0 && velocity.y == 0;
 
@@ -219,13 +215,11 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 tail++;
                 points++;
                 if (points > pointsMax) pointsMax = points;
-                reward = 1;
                 RandomFruit();
                 // make sure new fruit didn't spawn in snake tail
-                while (checkFruitInSnake()) ;
+                while (checkFruitInSnake());
             }
         }
-        return reward;
     }
 
     boolean checkFruitInSnake() {

@@ -200,8 +200,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 if (player.y >= tileCount) player.y = 0;
             }
             if (!stopped) {
-                Vector2 p = new Vector2(player.x, player.y);
-                trail.add(p);
+                trail.add(new Vector2(player.x, player.y));
                 while (trail.size() > tail) trail.remove(0);
             }
             for (int i = 0; i < trail.size() - 1; i++) {

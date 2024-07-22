@@ -63,7 +63,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		//TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
 		//TODO: somehow synhronize my ui coordinates with graphical
         batch.begin();
-		font.draw(batch,"BRUH", 100,100);
 		testbtn.render();
 		secondBtn.render();
 		batch.end();

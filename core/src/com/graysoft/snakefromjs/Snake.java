@@ -84,12 +84,6 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
             localPaint.draw(wallsTexture,Gdx.graphics.getWidth() - gridSize + 1, 0, gridSize, Gdx.graphics.getHeight());
             localPaint.draw(wallsTexture,0, Gdx.graphics.getHeight() - gridSize + 1, Gdx.graphics.getWidth(), gridSize);
         }
-        if (!stopped) {
-            //some text
-            font.setColor(0.2f, 0.8f, 0.8f, 0.8f);
-            font.draw(localPaint,"(esc) reset", 24, 356);
-            font.draw(localPaint,"(space) pause", 24, 374);
-        }
         //snake color
         for (int i = 0; i < trail.size() - 1; i++) {
             localPaint.draw(snakeTexture,trail.get(i).x * gridSize + 1,
@@ -100,11 +94,16 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 gridSize - 2,gridSize - 2);
         localPaint.draw(appleTexture,fruit.x * gridSize + 1,fruit.y * gridSize + 1,
                 gridSize - 2,gridSize - 2);
-
+        //some text
         if (stopped) {
             font.setColor(1, 1, 1, 0.8f);
             font.draw(localPaint,"press ARROW KEYS to START...", 24, 374);
+        } else {
+            font.setColor(0.2f, 0.8f, 0.8f, 0.8f);
+            font.draw(localPaint,"(esc) reset", 24, 356);
+            font.draw(localPaint,"(space) pause", 24, 374);
         }
+
         font.setColor(Color.WHITE);
         font.draw(localPaint,"points: " + points, 248, 40);
         font.draw(localPaint,"top: " + pointsMax, 252, 60);
@@ -176,6 +175,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     }
 
     public void update() {
+        //tep happening only every 30th frame
         if(Gdx.graphics.getFrameId()%30 == 0) {
 
             boolean stopped = velocity.x == 0 && velocity.y == 0;

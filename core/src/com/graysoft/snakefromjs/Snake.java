@@ -23,7 +23,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     //UI layout
     MainGame main;
 
-    static final int INITIAL_TAIL = 1;
+    static final int INITIAL_TAIL = 100;
     //boolean fixedTail = false;
 
     static int tileCount = 6;
@@ -172,6 +172,14 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
             fruit.x = (int) Math.floor(Math.random() * tileCount);
             fruit.y = (int) Math.floor(Math.random() * tileCount);
         }
+        // make sure new fruit didn't spawn in snake tail
+        for (int i = 0; i < trail.size(); i++) {
+            if (  trail.get(i).x == fruit.x
+               && trail.get(i).y == fruit.y) {
+                RandomFruit();
+                break;
+            }
+        }
     }
 
     public void update() {
@@ -215,20 +223,8 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 points++;
                 if (points > pointsMax) pointsMax = points;
                 RandomFruit();
-                // make sure new fruit didn't spawn in snake tail
-                while (checkFruitInSnake());
             }
         }
-    }
-
-    boolean checkFruitInSnake() {
-        for (int i = 0; i < trail.size(); i++) {
-            if (trail.get(i).x == fruit.x && trail.get(i).y == fruit.y) {
-                RandomFruit();
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

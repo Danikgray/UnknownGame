@@ -22,15 +22,16 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     //UI layout
     MainGame main;
-    
+    //Directional Wheel for android controls
     private int DirectionWheel = 0;
     private boolean DirWhelBlocker = false;
 
-    static final int INITIAL_TAIL = 1;
+    static final int INITIAL_TAIL = 100;
     //boolean fixedTail = false;
 
     static int tileCount = 6;
     int gridSize = 400 / tileCount;
+    static private boolean Won = false;
 
     static final int[] INITIAL_PLAYER = {tileCount / 2, tileCount / 2};
 
@@ -102,6 +103,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         if (stopped) {
             font.setColor(1, 1, 1, 0.8f);
             font.draw(localPaint,"press ARROW KEYS to START...", 24, 374);
+            if (Won) font.draw(localPaint,"YOU WON!!!.", 24, 394);
         } else {
             font.setColor(0.2f, 0.8f, 0.8f, 0.8f);
             font.draw(localPaint,"(esc) reset", 24, 356);
@@ -126,6 +128,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     static void reset() {
         // reset game fields
+        Won = false;
         tail = INITIAL_TAIL;
         points = 0;
         velocity.x = 0;
@@ -170,7 +173,11 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         }
     }
 
-    static void RandomFruit() {
+    static void RandomFruit(int count) {
+        if(count > tileCount*tileCount){
+            Won = true;
+            return;
+        }
         if (walls) {
             fruit.x = (int) (1 + Math.floor(Math.random() * (tileCount - 2)));
             fruit.y = (int) (1 + Math.floor(Math.random() * (tileCount - 2)));
@@ -182,7 +189,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         for (int i = 0; i < trail.size(); i++) {
             if (  trail.get(i).x == fruit.x
                && trail.get(i).y == fruit.y) {
-                RandomFruit();
+                RandomFruit(++count);
                 break;
             }
         }
@@ -191,7 +198,10 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     public void update() {
         //tep happening only every 30th frame
         if(Gdx.graphics.getFrameId()%30 == 0) {
-
+            if(Won) {
+                velocity.x = 0;
+                velocity.y = 0;
+            }
             boolean stopped = velocity.x == 0 && velocity.y == 0;
 
             player.x += velocity.x;
@@ -228,7 +238,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 tail++;
                 points++;
                 if (points > pointsMax) pointsMax = points;
-                RandomFruit();
+                RandomFruit(0);
             }
             DirWhelBlocker = false;
         }
@@ -283,7 +293,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 action(ActionEnum.right);
                 break;
             case Input.Keys.G:
-                RandomFruit();
+                RandomFruit(0);
                 break;
             case Input.Keys.ESCAPE:
                 reset();

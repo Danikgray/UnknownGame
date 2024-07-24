@@ -22,8 +22,11 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     //UI layout
     MainGame main;
+    
+    private int DirectionWheel = 0;
+    private boolean DirWhelBlocker = false;
 
-    static final int INITIAL_TAIL = 100;
+    static final int INITIAL_TAIL = 1;
     //boolean fixedTail = false;
 
     static int tileCount = 6;
@@ -51,6 +54,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         right,
         left
     }
+ //   List<ActionEnum> = new ArrayList();
 
     static ActionEnum lastAction = ActionEnum.none;
 
@@ -103,6 +107,8 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
             font.draw(localPaint,"(esc) reset", 24, 356);
             font.draw(localPaint,"(space) pause", 24, 374);
         }
+        font.draw(localPaint,"DirWheel: " + DirectionWheel,24, 400);
+        font.draw(localPaint,"DirBlocker: " + DirWhelBlocker,24, 420);
 
         font.setColor(Color.WHITE);
         font.draw(localPaint,"points: " + points, 248, 40);
@@ -110,7 +116,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
         update();
         localPaint.end();
-        main.render();
+     //   main.render();
     }
     
     @Override
@@ -224,6 +230,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 if (points > pointsMax) pointsMax = points;
                 RandomFruit();
             }
+            DirWhelBlocker = false;
         }
     }
 
@@ -302,7 +309,43 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+       if(!DirWhelBlocker){
+           
+       
+        if(screenX<Gdx.graphics.getWidth()/2) 
+        DirectionWheel++;
+         else DirectionWheel--;
+     //  if(DirectionWheel >3 ) DirectionWheel =0;
+        
+        switch(DirectionWheel){
+            case -1:
+              DirectionWheel = 3;
+                action(ActionEnum.left);
+                break;
+            case 4:
+              DirectionWheel = 0;
+                action(ActionEnum.up);
+                break;
+            case 0:
+              action(ActionEnum.up);
+              break;
+            case 1:
+              action(ActionEnum.right);
+              break;
+            case 2:
+              action(ActionEnum.down);
+              break;
+            case 3:
+              action(ActionEnum.left);
+              break;
+            default:
+        //      DirectionWheel = 0;
+           //   action(ActionEnum.up);
+              break;
+            }
+        }
+        DirWhelBlocker = true;
+        return true;
     }
 
     @Override

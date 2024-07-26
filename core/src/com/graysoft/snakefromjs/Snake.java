@@ -25,27 +25,24 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     //Directional Wheel for android controls
     private int DirectionWheel = 0;
     private boolean DirWhelBlocker = false;
-
+    //initial snake score
     static final int INITIAL_TAIL = 1;
     //boolean fixedTail = false;
 
     static int tileCount = 6;
+    //Size of the grid at render
     int gridSize = 400 / tileCount;
     //static private boolean Won = false; //Disabled for the better times
-
-    static final int[] INITIAL_PLAYER = {tileCount / 2, tileCount / 2};
-
     static Vector2 velocity = new Vector2();
-    static Vector2 player = new Vector2();
+    static Vector2 head = new Vector2();
     //looped grid or just walls
     static boolean walls = false;
 
     static Vector2 fruit = new Vector2(1, 1);
 
-    static List<Vector2> trail = new ArrayList<>();
-    static int tail = INITIAL_TAIL;
+    static List<SnakeSegment> trail = new ArrayList<>();
 
-    static int points = 0;
+    static int points = INITIAL_TAIL-1;
     int pointsMax = 0;
 
     enum ActionEnum {
@@ -89,7 +86,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
             localPaint.draw(wallsTexture,Gdx.graphics.getWidth() - gridSize + 1, 0, gridSize, Gdx.graphics.getHeight());
             localPaint.draw(wallsTexture,0, Gdx.graphics.getHeight() - gridSize + 1, Gdx.graphics.getWidth(), gridSize);
         }
-        //snake color
+        //Draw snake
         for (int i = 0; i < trail.size() - 1; i++) {
             localPaint.draw(snakeTexture,trail.get(i).x * gridSize + 1,
                     trail.get(i).y * gridSize + 1,gridSize - 2,gridSize - 2);
@@ -113,7 +110,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         font.draw(localPaint,"DirBlocker: " + DirWhelBlocker,24, 420);
 
         font.setColor(Color.WHITE);
-        font.draw(localPaint,"points: " + points, 248, 40);
+        font.draw(localPaint,"points: " + (points - 1), 248, 40);
         font.draw(localPaint,"top: " + pointsMax, 252, 60);
 
         update();
@@ -129,17 +126,16 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     static void reset() {
         // reset game fields
         //Won = false;
-        tail = INITIAL_TAIL;
-        points = 0;
+        points = INITIAL_TAIL;
         velocity.x = 0;
         velocity.y = 0;
-        player.x = INITIAL_PLAYER[0];
-        player.y = INITIAL_PLAYER[1];
+        head.x = tileCount / 2f;
+        head.y = tileCount / 2f;
 
         lastAction = ActionEnum.none;
 
         trail = new ArrayList<>();
-        trail.add(new Vector2(player.x, player.y));
+        trail.add(new SnakeSegment(head.x, head.y));
     }
 
     static void action(ActionEnum action) {
@@ -204,8 +200,8 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
       //      }
             boolean stopped = velocity.x == 0 && velocity.y == 0;
 
-            player.x += velocity.x;
-            player.y += velocity.y;
+            head.x += velocity.x;
+            head.y += velocity.y;
 
             if (velocity.x == 0 && velocity.y == -1) lastAction = ActionEnum.up;
             if (velocity.x == 0 && velocity.y == 1) lastAction = ActionEnum.down;
@@ -213,30 +209,29 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
             if (velocity.x == 1 && velocity.y == 0) lastAction = ActionEnum.right;
 
             if (walls) {
-                if (player.x < 1) reset();
-                if (player.x > tileCount - 2) reset();
-                if (player.y < 1) reset();
-                if (player.y > tileCount - 2) reset();
+                if (head.x < 1) reset();
+                if (head.x > tileCount - 2) reset();
+                if (head.y < 1) reset();
+                if (head.y > tileCount - 2) reset();
             } else {
-                if (player.x < 0) player.x = tileCount - 1;
-                if (player.x >= tileCount) player.x = 0;
-                if (player.y < 0) player.y = tileCount - 1;
-                if (player.y >= tileCount) player.y = 0;
+                if (head.x < 0) head.x = tileCount - 1;
+                if (head.x >= tileCount) head.x = 0;
+                if (head.y < 0) head.y = tileCount - 1;
+                if (head.y >= tileCount) head.y = 0;
             }
             if (!stopped) {
-                trail.add(new Vector2(player.x, player.y));
-                while (trail.size() > tail) trail.remove(0);
+                trail.add(new SnakeSegment(head.x, head.y));
+                while (trail.size() > points) trail.remove(0);
             }
         //    if (!stopped && Won) Won = false;
             for (int i = 0; i < trail.size() - 1; i++) {
 
-                if (!stopped && trail.get(i).x == player.x && trail.get(i).y == player.y) {
+                if (!stopped && trail.get(i).x == head.x && trail.get(i).y == head.y) {
                     reset();
                 }
             }
-            if (player.x == fruit.x && player.y == fruit.y) {
+            if (head.x == fruit.x && head.y == fruit.y) {
                 // if (!fixedTail)
-                tail++;
                 points++;
                 if (points > pointsMax) pointsMax = points;
                 RandomFruit(0);
@@ -321,13 +316,11 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
        if(!DirWhelBlocker){
-           
-       
+
         if(screenX<Gdx.graphics.getWidth()/2) 
         DirectionWheel++;
          else DirectionWheel--;
-     //  if(DirectionWheel >3 ) DirectionWheel =0;
-        
+
         switch(DirectionWheel){
             case -1:
               DirectionWheel = 3;

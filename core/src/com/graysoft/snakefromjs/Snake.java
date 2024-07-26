@@ -17,7 +17,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     public SpriteBatch localPaint;
     //Textures and font
-    private Texture snakeTexture,wallsTexture, appleTexture;
+    private Texture wallsTexture, appleTexture;
     private BitmapFont font;
 
     //UI layout
@@ -34,7 +34,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     int gridSize = 400 / tileCount;
     //static private boolean Won = false; //Disabled for the better times
     static Vector2 velocity = new Vector2();
-    static Vector2 head = new Vector2();
+    static SnakeSegment head;
     //looped grid or just walls
     static boolean walls = false;
 
@@ -63,7 +63,6 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         main.create();
         font = new BitmapFont();
         localPaint = new SpriteBatch();
-        snakeTexture = new Texture("test.png");
         wallsTexture = new Texture("testg.png");
         appleTexture = new Texture("apple.png");
         Gdx.input.setInputProcessor(this);
@@ -88,12 +87,9 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         }
         //Draw snake
         for (int i = 0; i < trail.size() - 1; i++) {
-            localPaint.draw(snakeTexture,trail.get(i).x * gridSize + 1,
-                    trail.get(i).y * gridSize + 1,gridSize - 2,gridSize - 2);
+            trail.get(i).render(localPaint, gridSize);
         }
-
-        localPaint.draw(snakeTexture,trail.get(trail.size() - 1).x * gridSize + 1,trail.get(trail.size() - 1).y * gridSize + 1,
-                gridSize - 2,gridSize - 2);
+        head.render(localPaint, gridSize);
         localPaint.draw(appleTexture,fruit.x * gridSize + 1,fruit.y * gridSize + 1,
                 gridSize - 2,gridSize - 2);
         //some text
@@ -129,9 +125,8 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         points = INITIAL_TAIL;
         velocity.x = 0;
         velocity.y = 0;
-        head.x = tileCount / 2f;
-        head.y = tileCount / 2f;
-
+        head = new SnakeSegment(tileCount / 2f,tileCount / 2f);
+        head.setHead(true);
         lastAction = ActionEnum.none;
 
         trail = new ArrayList<>();

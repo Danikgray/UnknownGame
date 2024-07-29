@@ -1,15 +1,20 @@
 package com.graysoft.snakefromjs;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +26,14 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     private BitmapFont font;
 
     //UI layout
-    MainGame main;
+    MainUI main;
+    private Viewport viewport;
+    private OrthographicCamera camera;
     //Directional Wheel for android controls
     private int DirectionWheel = 0;
     private boolean DirWhelBlocker = false;
-    //initial snake score
+    //initial snake score/length
     static final int INITIAL_TAIL = 1;
-    //boolean fixedTail = false;
 
     static int tileCount = 6;
     //Size of the grid at render
@@ -59,10 +65,12 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     @Override
     public void create() {
         reset();
-        main = new MainGame();
+        main = new MainUI();
         main.create();
         font = new BitmapFont();
         localPaint = new SpriteBatch();
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(1280,720,camera);
         wallsTexture = new Texture("testg.png");
         appleTexture = new Texture("apple.png");
         Gdx.input.setInputProcessor(this);
@@ -75,6 +83,9 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
         Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
+        viewport.apply();
+        localPaint.setProjectionMatrix(camera.combined);
 
         localPaint.begin();
 
@@ -111,11 +122,12 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
         update();
         localPaint.end();
-     //   main.render();
+        main.render();
     }
     
     @Override
     public void resize(int a, int b){
+        viewport.update(a, b, true);
         main.resize(a,b);
     }
 
@@ -267,7 +279,11 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 break;
         }
     }*/
-
+   @Override
+   public void dispose () {
+       //TODO: put other variables there
+       localPaint.dispose();
+   }
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
@@ -310,7 +326,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-       if(!DirWhelBlocker){
+       if(!DirWhelBlocker && Gdx.app.getType() == Application.ApplicationType.Android){
 
         if(screenX<Gdx.graphics.getWidth()/2) 
         DirectionWheel++;
@@ -342,8 +358,8 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
            //   action(ActionEnum.up);
               break;
             }
+           DirWhelBlocker = true;
         }
-        DirWhelBlocker = true;
         return true;
     }
 

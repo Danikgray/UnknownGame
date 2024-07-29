@@ -2,7 +2,6 @@ package com.graysoft.snakefromjs;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.graysoft.snakefromjs.MainGame;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
@@ -10,6 +9,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Snakefromjs");
+		config.setWindowedMode(1280, 720);
 		//new Lwjgl3Application(new MainGame(), config);
 		new Lwjgl3Application(new Snake(), config);
 	}

@@ -7,23 +7,18 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.ui.elements.Button;
 
-public class MainGame extends ApplicationAdapter implements InputProcessor {
+public class MainUI implements InputProcessor {
 
 	private SpriteBatch batch;
 
 	OrthographicCamera camera;//will fix resizing in the future
 
-	Viewport view;
-
-	int x,y, OldX,OldY;
+	private Viewport view;
 
 	private static Button testbtn, secondBtn;
 
@@ -31,7 +26,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 
 	private BitmapFont font;
 
-	@Override
 	public void create () {
 		font =  new BitmapFont();
 	    batch = new SpriteBatch();
@@ -53,7 +47,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 	}
 	
     //Input calls at first and then its call the render method
-	@Override
 	public void render () {
 	//	Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 	//	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -68,14 +61,13 @@ public class MainGame extends ApplicationAdapter implements InputProcessor {
 		batch.end();
 	}
 
-	@Override
 	public void dispose () {
+		//TODO: put other variables there
 		batch.dispose();
 	}
-	
-	@Override public void pause () {}
-	@Override public void resume () {}
-	@Override public void resize (int width, int height) {
+	public void pause () {}
+	public void resume () {}
+	public void resize (int width, int height) {
 		view.update(width,height,true);
 		testbtn.setX(view.getScreenWidth()/2);
 		testbtn.setY(view.getScreenHeight()/2);

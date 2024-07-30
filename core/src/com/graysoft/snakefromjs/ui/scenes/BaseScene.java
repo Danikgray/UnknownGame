@@ -1,6 +1,7 @@
 package com.graysoft.snakefromjs.ui.scenes;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.ui.elements.Area;
 import com.graysoft.snakefromjs.ui.elements.Button;
 import com.graysoft.snakefromjs.ui.elements.ImageElement;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 public class BaseScene {
     
     protected SpriteBatch SceneBatch;
+    protected Viewport view;
     
     protected ArrayList<TouchableElement> touchElements;
     protected ArrayList<ImageElement> renderElements;

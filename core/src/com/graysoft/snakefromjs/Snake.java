@@ -26,7 +26,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     private BitmapFont font;
 
     //UI layout
-    MainUI main;
+    MainGame main;
     private Viewport viewport;
     private OrthographicCamera camera;
     //Directional Wheel for android controls
@@ -38,7 +38,6 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     static int tileCount = 6;
     //Size of the grid at render
     int gridSize = 400 / tileCount;
-    //static private boolean Won = false; //Disabled for the better times
     static Vector2 velocity = new Vector2();
     static SnakeSegment head;
     //looped grid or just walls
@@ -58,14 +57,13 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         right,
         left
     }
- //   List<ActionEnum> = new ArrayList();
 
     static ActionEnum lastAction = ActionEnum.none;
 
     @Override
     public void create() {
         reset();
-        main = new MainUI();
+        main = new MainGame();
         main.create();
         font = new BitmapFont();
         localPaint = new SpriteBatch();
@@ -133,7 +131,6 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
 
     static void reset() {
         // reset game fields
-        //Won = false;
         points = INITIAL_TAIL;
         velocity.x = 0;
         velocity.y = 0;
@@ -176,11 +173,8 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         }
     }
 
-    static void RandomFruit(int count) {
-       // if(trail.size() == tileCount){
-            //Won = true;
-   //         return;
-   //     }
+    static void RandomFruit() {
+
         if (walls) {
             fruit.x = (int) (1 + Math.floor(Math.random() * (tileCount - 2)));
             fruit.y = (int) (1 + Math.floor(Math.random() * (tileCount - 2)));
@@ -192,7 +186,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         for (int i = 0; i < trail.size(); i++) {
             if (  trail.get(i).x == fruit.x
                && trail.get(i).y == fruit.y) {
-                RandomFruit(++count);
+                RandomFruit();
                 break;
             }
         }
@@ -201,10 +195,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
     public void update() {
         //tep happening only every 30th frame
         if(Gdx.graphics.getFrameId()%30 == 0) {
-     //       if(Won) {
-      //          velocity.x = 0;
-      //          velocity.y = 0;
-      //      }
+
             boolean stopped = velocity.x == 0 && velocity.y == 0;
 
             head.x += velocity.x;
@@ -230,7 +221,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 trail.add(new SnakeSegment(head.x, head.y));
                 while (trail.size() > points) trail.remove(0);
             }
-        //    if (!stopped && Won) Won = false;
+
             for (int i = 0; i < trail.size() - 1; i++) {
 
                 if (!stopped && trail.get(i).x == head.x && trail.get(i).y == head.y) {
@@ -238,10 +229,9 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 }
             }
             if (head.x == fruit.x && head.y == fruit.y) {
-                // if (!fixedTail)
                 points++;
                 if (points > pointsMax) pointsMax = points;
-                RandomFruit(0);
+                RandomFruit();
             }
             DirWhelBlocker = false;
         }
@@ -253,32 +243,6 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
         velocity.y = 0;
     }
 
-   /* void keyPush(KeyEvent evt) {
-        switch (evt.getKeyCode()) {
-            case KeyEvent.KEYCODE_A: // left
-                action(ActionEnum.left);
-                break;
-            case KeyEvent.KEYCODE_W: // up
-                action(ActionEnum.up);
-                break;
-
-            case KeyEvent.KEYCODE_D: // right
-                action(ActionEnum.right);
-                break;
-
-            case KeyEvent.KEYCODE_S: // down
-                action(ActionEnum.down);
-                break;
-
-            case KeyEvent.KEYCODE_SPACE: // space
-                pause();
-                break;
-
-            case KeyEvent.KEYCODE_ESCAPE: // esc
-                reset();
-                break;
-        }
-    }*/
    @Override
    public void dispose () {
        //TODO: put other variables there
@@ -300,7 +264,7 @@ public class Snake extends ApplicationAdapter implements InputProcessor {
                 action(ActionEnum.right);
                 break;
             case Input.Keys.G:
-                RandomFruit(0);
+                RandomFruit();
                 break;
             case Input.Keys.ESCAPE:
                 reset();

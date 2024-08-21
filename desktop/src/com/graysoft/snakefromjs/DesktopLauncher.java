@@ -11,6 +11,6 @@ public class DesktopLauncher {
 		config.setTitle("Snakefromjs");
 		config.setWindowedMode(1280, 720);
 		//new Lwjgl3Application(new MainGame(), config);
-		new Lwjgl3Application(new Snake(), config);
+		new Lwjgl3Application(new MainGame(), config);
 	}
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.ui.elements.Area;
@@ -58,17 +59,23 @@ public class BaseScene implements InputProcessor {
         }
         camera.update();
         view.apply();
-        batch.setProjectionMatrix(camera.combined);
+        SceneBatch.setProjectionMatrix(camera.combined);
         //TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
         //TODO: somehow synhronize my ui coordinates with graphical
-        batch.begin();
+        SceneBatch.begin();
         testbtn.render();
         secondBtn.render();
-        batch.end();
+        SceneBatch.end();
         for(ImageElement element : renderElements){
             element.render(SceneBatch);
         }
     }
+    
+    public void resize (int width, int height) {
+		view.update(width,height,true);
+		testbtn.setX(view.getScreenWidth()/2);
+		testbtn.setY(view.getScreenHeight()/2);
+	}
 
     public void touchDown(int x, int y, int pointers){
         for(TouchableElement element : touchElements){
@@ -83,7 +90,7 @@ public class BaseScene implements InputProcessor {
     }
     public void dispose () {
         //TODO: put other variables there
-        batch.dispose();
+        SceneBatch.dispose();
     }
 
     @Override
@@ -103,17 +110,26 @@ public class BaseScene implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        Vector2 cord = view.unproject(new Vector2(screenX,screenY));
+		testbtn.touchDown(cord.x, cord.y);
+		secondBtn.touchDown(cord.x, cord.y);
+		System.out.println(cord);
+        return true;
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
+	public boolean touchUp(int x, int y, int pointer, int button) {
+		testbtn.touchUp();
+		secondBtn.touchUp();
+		return true;
+	}
 
-    public boolean touchDragged(int x, int y, int pointers){
-        return false;
-    }
+	@Override
+	public boolean touchDragged(int x, int y, int pointers) {
+        testbtn.touchDragged(x,y);
+		secondBtn.touchDragged(x,y);
+		return true;
+	}
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {

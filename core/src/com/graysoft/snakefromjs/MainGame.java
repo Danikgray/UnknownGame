@@ -16,8 +16,7 @@ import com.graysoft.snakefromjs.ui.elements.Button;
 public class MainGame implements InputProcessor, ApplicationListener {
 
 	public void create () {
-
-		Gdx.input.setInputProcessor(this);
+	//	Gdx.input.setInputProcessor(this);
 	}
 	
     //Input calls at first and then its call the render method
@@ -33,9 +32,7 @@ public class MainGame implements InputProcessor, ApplicationListener {
 	public void pause () {}
 	public void resume () {}
 	public void resize (int width, int height) {
-		view.update(width,height,true);
-		testbtn.setX(view.getScreenWidth()/2);
-		testbtn.setY(view.getScreenHeight()/2);
+		
 	}
 
 	//Input management
@@ -57,24 +54,16 @@ public class MainGame implements InputProcessor, ApplicationListener {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		Vector2 cord = view.unproject(new Vector2(x,y));
-		testbtn.touchDown(cord.x, cord.y);
-		secondBtn.touchDown(cord.x, cord.y);
-		System.out.println(cord);
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		testbtn.touchUp();
-		secondBtn.touchUp();
 		return true;
 	}
 
 	@Override
 	public boolean touchDragged(int x, int y, int pointers) {
-        testbtn.touchDragged(x,y);
-		secondBtn.touchDragged(x,y);
 		return true;
 	}
 

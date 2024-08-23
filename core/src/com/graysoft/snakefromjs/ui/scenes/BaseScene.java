@@ -14,14 +14,13 @@ import com.graysoft.snakefromjs.ui.elements.ImageElement;
 import com.graysoft.snakefromjs.ui.elements.TouchableElement;
 import java.util.ArrayList;
 
-public class BaseScene implements InputProcessor {
+public class BaseScene {
 
-    OrthographicCamera camera;//will fix resizing in the future
+    protected OrthographicCamera camera;//will fix resizing in the future
 
-    private Viewport view;
+    protected Viewport view;
     protected SpriteBatch SceneBatch;
-    private static Button testbtn, secondBtn;
-
+   
     protected ArrayList<TouchableElement> touchElements;
     protected ArrayList<ImageElement> renderElements;
     
@@ -31,16 +30,6 @@ public class BaseScene implements InputProcessor {
         renderElements = new ArrayList<ImageElement>();
         camera = new OrthographicCamera();
         view = new ExtendViewport(800,480,camera);
-        testbtn = new Button(new Texture("test.png"),new Texture("testg.png"),batch);
-        testbtn.setX(-800/2);
-        testbtn.setY(480/2);
-        testbtn.setWidth(100);
-        testbtn.setHeight(100);
-        secondBtn = new Button(new Texture("test.png"),new Texture("testg.png"),batch);
-        secondBtn.setX(800/4);
-        secondBtn.setY(480/4);
-        secondBtn.setWidth(100);
-        secondBtn.setHeight(100);
     }
     
     protected void addElement(Area element){
@@ -63,80 +52,62 @@ public class BaseScene implements InputProcessor {
         //TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
         //TODO: somehow synhronize my ui coordinates with graphical
         SceneBatch.begin();
-        testbtn.render();
-        secondBtn.render();
-        SceneBatch.end();
         for(ImageElement element : renderElements){
             element.render(SceneBatch);
         }
+       // SceneBatch.end();
     }
     
     public void resize (int width, int height) {
 		view.update(width,height,true);
-		testbtn.setX(view.getScreenWidth()/2);
-		testbtn.setY(view.getScreenHeight()/2);
 	}
-
-    public void touchDown(int x, int y, int pointers){
-        for(TouchableElement element : touchElements){
-            element.touchDown();
-        }
-    }
-
-    public void touchUp(int x, int y, int pointers){
-        for(TouchableElement element : touchElements){
-            element.touchUp();
-        }
-    }
+    
     public void dispose () {
         //TODO: put other variables there
         SceneBatch.dispose();
     }
 
-    @Override
+    
     public boolean keyDown(int keycode) {
         return false;
     }
 
-    @Override
+    
     public boolean keyUp(int keycode) {
         return false;
     }
 
-    @Override
+    
     public boolean keyTyped(char character) {
         return false;
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 cord = view.unproject(new Vector2(screenX,screenY));
-		testbtn.touchDown(cord.x, cord.y);
-		secondBtn.touchDown(cord.x, cord.y);
-		System.out.println(cord);
+    
+    public boolean touchDown(int screenX, int screenY, int pointer) {
+        for(TouchableElement element : touchElements){
+            element.touchDown();
+        }
         return true;
     }
 
-    @Override
-	public boolean touchUp(int x, int y, int pointer, int button) {
-		testbtn.touchUp();
-		secondBtn.touchUp();
+	public boolean touchUp(int x, int y, int pointer) {
+		for(TouchableElement element : touchElements){
+            element.touchUp();
+        }
 		return true;
 	}
 
-	@Override
+	
 	public boolean touchDragged(int x, int y, int pointers) {
-        testbtn.touchDragged(x,y);
-		secondBtn.touchDragged(x,y);
 		return true;
 	}
 
-    @Override
+    
     public boolean mouseMoved(int screenX, int screenY) {
         return false;
     }
 
-    @Override
+    
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }

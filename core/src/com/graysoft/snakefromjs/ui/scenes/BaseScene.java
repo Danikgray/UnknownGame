@@ -41,11 +41,11 @@ public class BaseScene {
     
     //hehehe shitcoding on the work(sorry)
     public void render(){
-        if(renderElements==null || touchElements == null){
+        /* if(renderElements==null || touchElements == null){
           return;
         }else if(renderElements.size() <1 || touchElements.size()<1){
             return;
-        }
+        }*/
         camera.update();
         view.apply();
         SceneBatch.setProjectionMatrix(camera.combined);
@@ -55,7 +55,7 @@ public class BaseScene {
         for(ImageElement element : renderElements){
             element.render(SceneBatch);
         }
-       // SceneBatch.end();
+        SceneBatch.end();
     }
     
     public void resize (int width, int height) {

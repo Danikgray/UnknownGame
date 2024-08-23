@@ -24,7 +24,7 @@ public class MainGame implements InputProcessor, ApplicationListener {
 	public void create () {
         batch = new SpriteBatch();
         scene = new MainMenuScene(batch);
-	//	Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(this);
 	}
 	
     //Input calls at first and then its call the render method

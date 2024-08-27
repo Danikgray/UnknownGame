@@ -19,18 +19,17 @@ import com.graysoft.snakefromjs.ui.scenes.MainMenuScene;
 public class MainGame implements InputProcessor, ApplicationListener {
     
     private BaseScene scene;
-    private SpriteBatch batch;
     
 	public void create () {
-        batch = new SpriteBatch();
-        scene = new MainMenuScene(batch);
+        scene = new MainMenuScene();
 		Gdx.input.setInputProcessor(this);
 	}
 	
-    //Input calls at first and then its call the render method
+    //Tip(?):Input calls at first and then its call the render method
 	public void render () {
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//TODO: snake render here
         scene.render();
 	}
 

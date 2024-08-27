@@ -1,14 +1,10 @@
 package com.graysoft.snakefromjs.ui.scenes;
 
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.graysoft.snakefromjs.ui.elements.Area;
 import com.graysoft.snakefromjs.ui.elements.Button;
 import com.graysoft.snakefromjs.ui.elements.ImageElement;
 import com.graysoft.snakefromjs.ui.elements.TouchableElement;
@@ -20,40 +16,34 @@ public class BaseScene {
 
     protected Viewport view;
     protected SpriteBatch SceneBatch;
-   
-    protected ArrayList<TouchableElement> touchElements;
-    protected ArrayList<ImageElement> renderElements;
+    protected ArrayList<Button> Elements;
     
-    public BaseScene(SpriteBatch batch){
-        SceneBatch = batch;
-        touchElements = new ArrayList<TouchableElement>();
-        renderElements = new ArrayList<ImageElement>();
+    public BaseScene(){
+        SceneBatch = new SpriteBatch();
+        Elements = new ArrayList<>();
         camera = new OrthographicCamera();
         view = new ExtendViewport(800,480,camera);
     }
     
-    protected void addElement(Area element){
-        /*if(element instanceof Button){
-            touchElements.add(((Button)element).touchAria);
-            renderElements.add((Button)element);
-        }*/
+    protected void addElement(Button element){
+            Elements.add(element);
     }
     
     //hehehe shitcoding on the work(sorry)
     public void render(){
-        /* if(renderElements==null || touchElements == null){
+         if(Elements ==null){
           return;
-        }else if(renderElements.size() <1 || touchElements.size()<1){
+        }else if(Elements.isEmpty()){
             return;
-        }*/
+        }
         camera.update();
         view.apply();
         SceneBatch.setProjectionMatrix(camera.combined);
         //TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
         //TODO: somehow synhronize my ui coordinates with graphical
         SceneBatch.begin();
-        for(ImageElement element : renderElements){
-            element.render(SceneBatch);
+        for(Button element : Elements){
+            element.render();
         }
         SceneBatch.end();
     }
@@ -84,14 +74,16 @@ public class BaseScene {
 
     
     public boolean touchDown(int screenX, int screenY, int pointer) {
-        for(TouchableElement element : touchElements){
-            element.touchDown();
+        Vector2 cord = view.unproject(new Vector2(screenX, screenY));
+        for(Button element : Elements){
+            element.touchDown(cord.x,cord.y);
         }
+        System.out.println(cord);
         return true;
     }
 
 	public boolean touchUp(int x, int y, int pointer) {
-		for(TouchableElement element : touchElements){
+		for(Button element : Elements){
             element.touchUp();
         }
 		return true;
@@ -99,6 +91,9 @@ public class BaseScene {
 
 	
 	public boolean touchDragged(int x, int y, int pointers) {
+        for(Button element : Elements){
+            element.touchDragged(x, y);
+        }
 		return true;
 	}
 

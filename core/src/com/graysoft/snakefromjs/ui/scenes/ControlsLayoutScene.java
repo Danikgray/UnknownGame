@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ControlsLayoutScene extends BaseScene{
     
-    public ControlsLayoutScene(SpriteBatch batch){
-        super(batch);
+    public ControlsLayoutScene(){
+        super();
     }
 }

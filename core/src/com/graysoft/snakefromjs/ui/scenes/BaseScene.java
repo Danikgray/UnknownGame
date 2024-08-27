@@ -6,8 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.ui.elements.Button;
-import com.graysoft.snakefromjs.ui.elements.ImageElement;
-import com.graysoft.snakefromjs.ui.elements.TouchableElement;
 import java.util.ArrayList;
 
 public class BaseScene {

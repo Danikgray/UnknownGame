@@ -1,24 +1,15 @@
 package com.graysoft.snakefromjs;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.graysoft.snakefromjs.ui.elements.Button;
 import com.graysoft.snakefromjs.ui.scenes.BaseScene;
 import com.graysoft.snakefromjs.ui.scenes.MainMenuScene;
 
 public class MainGame implements InputProcessor, ApplicationListener {
     
-    private BaseScene scene;
+    private static BaseScene scene;
     
 	public void create () {
         scene = new MainMenuScene();

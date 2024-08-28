@@ -1,6 +1,7 @@
 package com.graysoft.snakefromjs.ui.scenes;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.MainGame;
 import com.graysoft.snakefromjs.ui.elements.Button;
 
@@ -8,9 +9,9 @@ import com.graysoft.snakefromjs.ui.elements.Button;
 public class SceneExample extends BaseScene{
 
 private Button ExampleButton, SecondExpl;
-    public SceneExample(SpriteBatch batch) {
+    public SceneExample(/*Viewport view*/) {
         super();
-        SceneBatch = batch;
+        //this.view = view;
         ExampleButton = new Button(SceneBatch);
         ExampleButton.setX(100);
         ExampleButton.setY(260);

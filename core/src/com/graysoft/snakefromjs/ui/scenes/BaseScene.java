@@ -8,8 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.ui.elements.Button;
 import java.util.ArrayList;
 
-public class BaseScene {
-    
+public abstract class BaseScene {
     protected OrthographicCamera camera;//will fix resizing in the future
 
     protected Viewport view;
@@ -31,9 +30,9 @@ public class BaseScene {
     public void render(){
        // Instance.render();
          if(Elements ==null){
-        //  return;
+          return;
         }else if(Elements.isEmpty()){
-         //   return;
+            return;
         }
         camera.update();
         view.apply();
@@ -54,8 +53,7 @@ public class BaseScene {
     
     public void dispose () {
         //TODO: put other variables there
-     //   Instance.dispose();
-       SceneBatch.dispose();
+         SceneBatch.dispose();
     }
 
     
@@ -75,7 +73,6 @@ public class BaseScene {
 
     
     public boolean touchDown(int screenX, int screenY, int pointer) {
-        //I have no idea what I'm doing
    //     Instance.touchDown(screenX, screenY,pointer);
         Vector2 cord = view.unproject(new Vector2(screenX, screenY));
         for(Button element : Elements){
@@ -86,7 +83,6 @@ public class BaseScene {
     }
 
 	public boolean touchUp(int x, int y, int pointer) {
-       // Instance.touchUp(x,y,pointer);
 		for(Button element : Elements){
             element.touchUp();
         }

@@ -2,6 +2,7 @@ package com.graysoft.snakefromjs.ui.scenes;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.MainGame;
 import com.graysoft.snakefromjs.ui.elements.Button;
 
@@ -9,15 +10,14 @@ public class MainMenuScene extends BaseScene {
 
     private Button testbtn, secondBtn;
 
-    public MainMenuScene(SpriteBatch batch) {
+    public MainMenuScene() {
         super();
-        SceneBatch = batch;
-        System.out.println("MainMenuSxeneCreated!");
+       // this.view = view;
         testbtn = new Button(SceneBatch)
         {
             @Override
             public void action() {
-                MainGame.switchScene(new SceneExample(SceneBatch));
+                MainGame.switchScene(null);
             }
         };
         testbtn.setX(800 / 2);

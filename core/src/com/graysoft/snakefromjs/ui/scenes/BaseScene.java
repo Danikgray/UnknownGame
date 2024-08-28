@@ -9,30 +9,43 @@ import com.graysoft.snakefromjs.ui.elements.Button;
 import java.util.ArrayList;
 
 public class BaseScene {
-  //  protected static UIRenderController render;
+
     protected ArrayList<Button> Elements;
     protected static OrthographicCamera camera;//will fix resizing in the future
 
     protected static Viewport view;
     protected static SpriteBatch SceneBatch;
-    
-    public BaseScene(){
+
+    private static BaseScene INSTANCE;
+
+    protected BaseScene(){
         Elements = new ArrayList<>();
     }
-    
+
     public static void FirstInit(){
         SceneBatch = new SpriteBatch();
         camera = new OrthographicCamera();
         view = new ExtendViewport(800,480,camera);
+        INSTANCE = new MainMenuScene();
     }
-    
+
+    public static BaseScene getScene(){
+        if(INSTANCE == null)
+            FirstInit();
+        return INSTANCE;
+    }
+
+    public static void setScene(BaseScene scene) {
+        INSTANCE = scene;
+    }
+
     protected void addElement(Button element){
             Elements.add(element);
     }
     
     //hehehe shitcoding on the work(sorry)
     public void render(){
-         if(Elements ==null){
+         if(Elements == null){
           return;
         }else if(Elements.isEmpty()){
             return;
@@ -84,7 +97,6 @@ public class BaseScene {
     }
 
 	public boolean touchUp(int x, int y, int pointer) {
-       // Instance.touchUp(x,y,pointer);
 		for(Button element : Elements){
             element.touchUp();
         }
@@ -93,7 +105,6 @@ public class BaseScene {
 
 	
 	public boolean touchDragged(int x, int y, int pointers) {
-      //  Instance.touchDragged(x,y,pointers);
         for(Button element : Elements){
             element.touchDragged(x, y);
         }

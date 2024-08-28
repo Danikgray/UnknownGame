@@ -13,7 +13,7 @@ public class MainMenuScene extends BaseScene {
         {
             @Override
             public void action() {
-                MainGame.switchScene(new SceneExample());
+                setScene(new SceneExample());
             }
         }
                 .setPos(800 / 2, 480 / 2)

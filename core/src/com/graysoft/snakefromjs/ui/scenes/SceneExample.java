@@ -12,7 +12,7 @@ private Button ExampleButton, SecondExpl;
         ExampleButton = new Button(SceneBatch){
           @Override
             public void action(){
-                MainGame.switchScene(new MainMenuScene());
+                setScene(new MainMenuScene());
             }
         }       .setPos(100,260)
                 .setSize(50,500);

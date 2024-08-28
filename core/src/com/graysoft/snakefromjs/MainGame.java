@@ -9,12 +9,7 @@ import com.graysoft.snakefromjs.ui.scenes.MainMenuScene;
 
 public class MainGame implements InputProcessor, ApplicationListener {
     
-    private static BaseScene scene;
-    
 	public void create () {
-		//ScenesList.Init();
-        scene.FirstInit();
-        scene = new MainMenuScene(); //ScenesList.mainMenu;
 		Gdx.input.setInputProcessor(this);
 	}
 	
@@ -23,21 +18,17 @@ public class MainGame implements InputProcessor, ApplicationListener {
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//TODO: snake render here
-        scene.render();
+        BaseScene.getScene().render();
 	}
 
 	public void dispose () {
-        scene.dispose();
+        BaseScene.getScene().dispose();
 		//TODO: put other variables there
 	}
 	public void pause () {}
 	public void resume () {}
 	public void resize (int width, int height) {
-		scene.resize(width,height);
-	}
-    
-    public static void switchScene(BaseScene newScene){
-        scene = newScene;
+		BaseScene.getScene().resize(width,height);
 	}
 
 	//Input management
@@ -59,19 +50,19 @@ public class MainGame implements InputProcessor, ApplicationListener {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		scene.touchDown(x, y, pointer);
+		BaseScene.getScene().touchDown(x, y, pointer);
         return true;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		scene.touchUp(x,y,pointer);
+		BaseScene.getScene().touchUp(x,y,pointer);
         return true;
 	}
 
 	@Override
 	public boolean touchDragged(int x, int y, int pointers) {
-		scene.touchDragged(x,y,pointers);
+		BaseScene.getScene().touchDragged(x,y,pointers);
         return true;
 	}
 

@@ -31,9 +31,9 @@ public class BaseScene {
     public void render(){
        // Instance.render();
          if(Elements ==null){
-          return;
+        //  return;
         }else if(Elements.isEmpty()){
-            return;
+         //   return;
         }
         camera.update();
         view.apply();

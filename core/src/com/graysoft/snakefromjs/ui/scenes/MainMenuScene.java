@@ -13,7 +13,7 @@ public class MainMenuScene extends BaseScene {
         super();
         SceneBatch = batch;
         System.out.println("MainMenuSxeneCreated!");
-        testbtn = new Button(new Texture("test.png"), new Texture("testg.png"), SceneBatch)
+        testbtn = new Button(SceneBatch)
         {
             @Override
             public void action() {
@@ -26,17 +26,12 @@ public class MainMenuScene extends BaseScene {
         testbtn.setHeight(100);
         addElement(testbtn);
 
-        secondBtn = new Button(new Texture("test.png"), new Texture("testg.png"), SceneBatch);
+        secondBtn = new Button(SceneBatch);
         secondBtn.setX(800 / 4);
         secondBtn.setY(480 / 4);
         secondBtn.setWidth(100);
         secondBtn.setHeight(100);
         addElement(secondBtn);
-    }
-
-    @Override
-    public void render() {
-        super.render();
     }
 
     @Override

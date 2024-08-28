@@ -27,18 +27,13 @@ private Button ExampleButton, SecondExpl;
     }
 
     @Override
-    public void render() {
-        super.render();
-    }
-
-    @Override
     public void dispose() {
         super.dispose();
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer) {
-        MainGame.switchScene(new MainMenuScene(SceneBatch));
+    //    MainGame.switchScene(new MainMenuScene(SceneBatch));
         return super.touchDown(screenX, screenY, pointer);
     }
 

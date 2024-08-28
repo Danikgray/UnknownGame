@@ -37,7 +37,7 @@ public class MainGame implements InputProcessor, ApplicationListener {
 	}
     
     public static void switchScene(BaseScene newScene){
-        scene = newScene;
+        scene = new SceneExample(new SpriteBatch());
     }
 
 	//Input management

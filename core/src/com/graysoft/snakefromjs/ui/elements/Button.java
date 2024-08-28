@@ -34,7 +34,7 @@ public class Button {
     public void action(){
 
     }
-    
+    //Huh? why
     public void actionDrag(int pX,int pY){
         
     }
@@ -59,20 +59,36 @@ public class Button {
         }
     }
 
-    public void setX(float value){
-        x = value;
-    }
-    
-    public void setY(float value){
-        y = value;
-    }
-    
-    public void setHeight(float value){
-        height = value;
+    public Button setPos(float X, float Y){
+        x = X;
+        y = Y;
+        return this;
     }
 
-    public void setWidth(float value){
+    public Button setX(float value){
+        x = value;
+        return this;
+    }
+    
+    public Button setY(float value){
+        y = value;
+        return this;
+    }
+
+    public Button setSize(float Width, float Height){
+        width = Width;
+        height = Height;
+        return this;
+    }
+    
+    public Button setHeight(float value){
+        height = value;
+        return this;
+    }
+
+    public Button setWidth(float value){
         width = value;
+        return this;
     }
 
 }

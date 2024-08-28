@@ -8,16 +8,20 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.graysoft.snakefromjs.ui.elements.Button;
 import java.util.ArrayList;
 
-public abstract class BaseScene {
-    protected OrthographicCamera camera;//will fix resizing in the future
-
-    protected Viewport view;
-    protected SpriteBatch SceneBatch;
+public class BaseScene {
+  //  protected static UIRenderController render;
     protected ArrayList<Button> Elements;
+    protected static OrthographicCamera camera;//will fix resizing in the future
+
+    protected static Viewport view;
+    protected static SpriteBatch SceneBatch;
     
     public BaseScene(){
-        SceneBatch = new SpriteBatch();
         Elements = new ArrayList<>();
+    }
+    
+    public static void FirstInit(){
+        SceneBatch = new SpriteBatch();
         camera = new OrthographicCamera();
         view = new ExtendViewport(800,480,camera);
     }
@@ -28,7 +32,6 @@ public abstract class BaseScene {
     
     //hehehe shitcoding on the work(sorry)
     public void render(){
-       // Instance.render();
          if(Elements ==null){
           return;
         }else if(Elements.isEmpty()){
@@ -47,13 +50,12 @@ public abstract class BaseScene {
     }
     
     public void resize (int width, int height) {
-      //  Instance.resize(width,height);
 		view.update(width,height,true);
 	}
     
     public void dispose () {
+        SceneBatch.dispose();
         //TODO: put other variables there
-         SceneBatch.dispose();
     }
 
     
@@ -73,7 +75,6 @@ public abstract class BaseScene {
 
     
     public boolean touchDown(int screenX, int screenY, int pointer) {
-   //     Instance.touchDown(screenX, screenY,pointer);
         Vector2 cord = view.unproject(new Vector2(screenX, screenY));
         for(Button element : Elements){
             element.touchDown(cord.x,cord.y);
@@ -83,6 +84,7 @@ public abstract class BaseScene {
     }
 
 	public boolean touchUp(int x, int y, int pointer) {
+       // Instance.touchUp(x,y,pointer);
 		for(Button element : Elements){
             element.touchUp();
         }

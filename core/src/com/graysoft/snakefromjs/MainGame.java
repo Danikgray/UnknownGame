@@ -17,6 +17,7 @@ public class MainGame implements InputProcessor, ApplicationListener {
     
 	public void create () {
 		//ScenesList.Init();
+        scene.FirstInit();
         scene = new MainMenuScene(); //ScenesList.mainMenu;
 		Gdx.input.setInputProcessor(this);
 	}
@@ -40,8 +41,7 @@ public class MainGame implements InputProcessor, ApplicationListener {
 	}
     
     public static void switchScene(BaseScene newScene){
-        scene = new SceneExample();
-		//scene.resize(100,100);
+        scene = newScene;
 	}
 
 	//Input management

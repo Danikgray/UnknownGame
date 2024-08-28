@@ -12,7 +12,12 @@ private Button ExampleButton, SecondExpl;
     public SceneExample(/*Viewport view*/) {
         super();
         //this.view = view;
-        ExampleButton = new Button(SceneBatch);
+        ExampleButton = new Button(SceneBatch){
+          @Override
+            public void action(){
+                MainGame.switchScene(new MainMenuScene());
+            }
+        };
         ExampleButton.setX(100);
         ExampleButton.setY(260);
         ExampleButton.setHeight(500);

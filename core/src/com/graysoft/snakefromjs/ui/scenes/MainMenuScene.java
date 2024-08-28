@@ -12,12 +12,11 @@ public class MainMenuScene extends BaseScene {
 
     public MainMenuScene() {
         super();
-       // this.view = view;
         testbtn = new Button(SceneBatch)
         {
             @Override
             public void action() {
-                MainGame.switchScene(null);
+                MainGame.switchScene(new SceneExample());
             }
         };
         testbtn.setX(800 / 2);

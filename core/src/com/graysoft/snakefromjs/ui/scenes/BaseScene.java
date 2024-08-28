@@ -9,7 +9,7 @@ import com.graysoft.snakefromjs.ui.elements.Button;
 import java.util.ArrayList;
 
 public class BaseScene {
-
+    
     protected OrthographicCamera camera;//will fix resizing in the future
 
     protected Viewport view;
@@ -29,6 +29,7 @@ public class BaseScene {
     
     //hehehe shitcoding on the work(sorry)
     public void render(){
+       // Instance.render();
          if(Elements ==null){
           return;
         }else if(Elements.isEmpty()){
@@ -47,12 +48,14 @@ public class BaseScene {
     }
     
     public void resize (int width, int height) {
+      //  Instance.resize(width,height);
 		view.update(width,height,true);
 	}
     
     public void dispose () {
         //TODO: put other variables there
-        SceneBatch.dispose();
+     //   Instance.dispose();
+       SceneBatch.dispose();
     }
 
     
@@ -72,6 +75,8 @@ public class BaseScene {
 
     
     public boolean touchDown(int screenX, int screenY, int pointer) {
+        //I have no idea what I'm doing
+   //     Instance.touchDown(screenX, screenY,pointer);
         Vector2 cord = view.unproject(new Vector2(screenX, screenY));
         for(Button element : Elements){
             element.touchDown(cord.x,cord.y);
@@ -81,6 +86,7 @@ public class BaseScene {
     }
 
 	public boolean touchUp(int x, int y, int pointer) {
+       // Instance.touchUp(x,y,pointer);
 		for(Button element : Elements){
             element.touchUp();
         }
@@ -89,6 +95,7 @@ public class BaseScene {
 
 	
 	public boolean touchDragged(int x, int y, int pointers) {
+      //  Instance.touchDragged(x,y,pointers);
         for(Button element : Elements){
             element.touchDragged(x, y);
         }

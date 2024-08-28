@@ -1,14 +1,16 @@
 package com.graysoft.snakefromjs.ui.scenes;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.graysoft.snakefromjs.MainGame;
 import com.graysoft.snakefromjs.ui.elements.Button;
 
 
 public class SceneExample extends BaseScene{
 
 private Button ExampleButton, SecondExpl;
-    public SceneExample() {
+    public SceneExample(SpriteBatch batch) {
         super();
-
+        SceneBatch = batch;
         ExampleButton = new Button(SceneBatch);
         ExampleButton.setX(100);
         ExampleButton.setY(260);
@@ -36,6 +38,7 @@ private Button ExampleButton, SecondExpl;
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer) {
+        MainGame.switchScene(new MainMenuScene(SceneBatch));
         return super.touchDown(screenX, screenY, pointer);
     }
 

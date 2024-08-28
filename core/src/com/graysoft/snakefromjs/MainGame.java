@@ -4,15 +4,17 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.graysoft.snakefromjs.ui.scenes.BaseScene;
 import com.graysoft.snakefromjs.ui.scenes.MainMenuScene;
+import com.graysoft.snakefromjs.ui.scenes.SceneExample;
 
 public class MainGame implements InputProcessor, ApplicationListener {
     
     private static BaseScene scene;
     
 	public void create () {
-        scene = new MainMenuScene();
+        scene = new MainMenuScene(new SpriteBatch());
 		Gdx.input.setInputProcessor(this);
 	}
 	
@@ -33,6 +35,10 @@ public class MainGame implements InputProcessor, ApplicationListener {
 	public void resize (int width, int height) {
 		scene.resize(width,height);
 	}
+    
+    public static void switchScene(BaseScene newScene){
+        scene = newScene;
+    }
 
 	//Input management
 

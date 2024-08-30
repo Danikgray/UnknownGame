@@ -12,7 +12,7 @@ public class MainMenuScene extends BaseScene {
         testbtn = new Button(SceneBatch)
         {
             @Override
-            public void action() {
+            public void actionUp() {
                 setScene(new SceneExample());
             }
         }

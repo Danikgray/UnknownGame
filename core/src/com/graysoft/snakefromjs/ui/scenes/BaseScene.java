@@ -1,5 +1,6 @@
 package com.graysoft.snakefromjs.ui.scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -57,7 +58,9 @@ public class BaseScene {
         //TODO: somehow synhronize my ui coordinates with graphical
         SceneBatch.begin();
         for(Button element : Elements){
-            element.render();
+            //temponary select detection
+            Vector2 cord = view.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+            element.render(cord.x, cord.y);
         }
         SceneBatch.end();
     }
@@ -97,23 +100,27 @@ public class BaseScene {
     }
 
 	public boolean touchUp(int x, int y, int pointer) {
+        //Looks kinda shit but idkk how to do it better so far
+        Vector2 cord = view.unproject(new Vector2(x, y));
 		for(Button element : Elements){
-            element.touchUp();
+            element.touchUp(cord.x, cord.y);
         }
 		return true;
 	}
 
 	
 	public boolean touchDragged(int x, int y, int pointers) {
+        Vector2 cord = view.unproject(new Vector2(x, y));
         for(Button element : Elements){
-            element.touchDragged(x, y);
+            element.touchDragged(cord.x, cord.y);
         }
 		return true;
 	}
 
     
     public boolean mouseMoved(int screenX, int screenY) {
-        return false;
+        //maybe its for just moving around indeed for slectinn i think
+        return true;
     }
 
     

@@ -11,7 +11,7 @@ private Button ExampleButton, SecondExpl;
         super();
         ExampleButton = new Button(SceneBatch){
           @Override
-            public void action(){
+            public void actionUp(){
                 setScene(new MainMenuScene());
             }
         }       .setPos(100,260)

@@ -20,18 +20,14 @@ public class Button {
     }
 
 
-    public Button(Texture pressed,Texture idle,SpriteBatch batch){
+    public Button(Texture pressed, Texture idle, Texture selected, SpriteBatch batch){
         localBatch = batch;
         PressedTexture = pressed;
         IdleTexture = idle;
+        SelectedTexture = selected;
     }
 
-    public void render(float pointerX, float pointerY){
-        if ((pointerX > x && pointerX < (x + width)) &&
-                (pointerY > y && pointerY < (y + height)))
-            selected = true;
-        else
-            selected = false;
+    public void render(){
         if(localBatch.isDrawing())
             localBatch.draw(pressed ? PressedTexture : (selected ? SelectedTexture : IdleTexture), x, y, width, height);
     }
@@ -70,7 +66,6 @@ public class Button {
 
     public void actionUp(){}
     public void actionDown(){}
-    //Huh? why
     public void actionDrag(float pX,float pY){}
 
     public void touchUp(float pointerX, float pointerY){
@@ -96,5 +91,13 @@ public class Button {
         if (pressed) {
             actionDrag(pointerX, pointerY);
         }
+    }
+
+    public void mouseMoved(float pointerX, float pointerY) {
+        if ((pointerX > x && pointerX < (x + width)) &&
+                (pointerY > y && pointerY < (y + height)))
+            selected = true;
+        else
+            selected = false;
     }
 }

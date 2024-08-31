@@ -68,7 +68,8 @@ public class MainGame implements InputProcessor, ApplicationListener {
 
 	@Override
 	public boolean mouseMoved(int x, int y) {
-		return false;
+		BaseScene.getScene().mouseMoved(x, y);
+		return true;
 	}
 
 	@Override

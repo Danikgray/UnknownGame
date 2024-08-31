@@ -10,7 +10,7 @@ A simple snake game writen in java with self-writen UI on top of the libGDX fram
 - [ ] Different display sizes support
 - [ ] Create at least not shitty looking textures
 - [ ] Create a smooth animations for the snake(mayby not)
-- [ ] Refractor thecode and make it readable
+- [ ] Refractor the code and make it readable
 - [ ] ~~Maybe create a multiplayer mode~~
 
 That all for now I guess🤧

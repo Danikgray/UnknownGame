@@ -59,8 +59,7 @@ public class BaseScene {
         SceneBatch.begin();
         for(Button element : Elements){
             //temponary select detection
-            Vector2 cord = view.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-            element.render(cord.x, cord.y);
+            element.render();
         }
         SceneBatch.end();
     }
@@ -119,7 +118,10 @@ public class BaseScene {
 
     
     public boolean mouseMoved(int screenX, int screenY) {
-        //maybe its for just moving around indeed for slectinn i think
+        Vector2 cord = view.unproject(new Vector2(screenX, screenY));
+        for(Button element : Elements){
+            element.mouseMoved(cord.x, cord.y);
+        }
         return true;
     }
 

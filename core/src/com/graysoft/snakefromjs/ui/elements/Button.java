@@ -4,10 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Button {
     protected SpriteBatch localBatch;
-    protected float x = 0;
-    protected float y = 0;
-    private float height = 100;
-    private float width = 100;
+    protected float
+            x = 0,
+            y = 0,
+            height = 100,
+            width = 100;
     public Texture PressedTexture, IdleTexture, SelectedTexture;
 
     private boolean pressed = false, selected = false;

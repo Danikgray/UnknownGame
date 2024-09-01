@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.graysoft.snakefromjs.ui.scenes.BaseScene;
-import com.graysoft.snakefromjs.ui.scenes.MainMenuScene;
 
 public class MainGame implements InputProcessor, ApplicationListener {
     

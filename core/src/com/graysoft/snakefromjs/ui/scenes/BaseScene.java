@@ -1,6 +1,5 @@
 package com.graysoft.snakefromjs.ui.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -18,15 +17,17 @@ public class BaseScene {
     protected static SpriteBatch SceneBatch;
 
     private static BaseScene INSTANCE;
+    private Button movingButton;
 
     protected BaseScene(){
         Elements = new ArrayList<>();
+        movingButton = new Button(SceneBatch);
     }
 
     public static void FirstInit(){
         SceneBatch = new SpriteBatch();
         camera = new OrthographicCamera();
-        view = new ExtendViewport(800,480,camera);
+        view = new ExtendViewport(1280,720,camera);
         INSTANCE = new MainMenuScene();
     }
 
@@ -57,8 +58,8 @@ public class BaseScene {
         //TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
         //TODO: somehow synhronize my ui coordinates with graphical
         SceneBatch.begin();
+        movingButton.render();
         for(Button element : Elements){
-            //temponary select detection
             element.render();
         }
         SceneBatch.end();
@@ -66,6 +67,7 @@ public class BaseScene {
     
     public void resize (int width, int height) {
 		view.update(width,height,true);
+        movingButton.setPos(width,250);
 	}
     
     public void dispose () {

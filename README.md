@@ -1,5 +1,5 @@
 # JSnake game
-A simple snake game writen in java with self-writen UI on top of the libGDX framework
+A simple snake game written in java with self-written UI on top of the libGDX framework
 
 ### Things that I want to do in the game
 - [ ] Make multiple UI scenes for different menus
@@ -9,8 +9,8 @@ A simple snake game writen in java with self-writen UI on top of the libGDX fram
 - [ ] Settings menu(maybe not necessary)
 - [ ] Different display sizes support
 - [ ] Create at least not shitty looking textures
-- [ ] Create a smooth animations for the snake(mayby not)
-- [ ] Refractor the code and make it readable
+- [ ] Create a smooth animations for the snake(maybe not)
+- [ ] Refactor the code and make it readable
 - [ ] ~~Maybe create a multiplayer mode~~
 
 That all for now I guess🤧

@@ -1,5 +1,6 @@
 package com.graysoft.snakefromjs.ui.scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 public class BaseScene {
 
     protected ArrayList<Button> Elements;
-    protected static OrthographicCamera camera;//will fix resizing in the future
+    //protected static OrthographicCamera camera;//will fix resizing in the future
 
-    protected static Viewport view;
+    //protected static Viewport view;
     protected static SpriteBatch SceneBatch;
 
     private static BaseScene INSTANCE;
@@ -26,8 +27,8 @@ public class BaseScene {
 
     public static void FirstInit(){
         SceneBatch = new SpriteBatch();
-        camera = new OrthographicCamera();
-        view = new ExtendViewport(1280,720,camera);
+        //camera = new OrthographicCamera();
+        //view = new ExtendViewport(1280,720,camera);
         INSTANCE = new MainMenuScene();
     }
 
@@ -47,14 +48,11 @@ public class BaseScene {
     
     //hehehe shitcoding on the work(sorry)
     public void render(){
-         if(Elements == null){
-          return;
-        }else if(Elements.isEmpty()){
-            return;
-        }
-        camera.update();
-        view.apply();
-        SceneBatch.setProjectionMatrix(camera.combined);
+         if(Elements == null || Elements.isEmpty())
+             return;
+        //camera.update();
+        //view.apply();
+        //SceneBatch.setProjectionMatrix(//camera.combined);
         //TODO: here test with libgdx coordinate system? because libgdx have inverted y axis so i need
         //TODO: somehow synhronize my ui coordinates with graphical
         SceneBatch.begin();
@@ -66,7 +64,10 @@ public class BaseScene {
     }
     
     public void resize (int width, int height) {
-		view.update(width,height,true);
+        //view = new ExtendViewport(width,height,camera);
+        //view.update(width,height,true);
+       // c//amera.update();
+        Gdx.graphics.;
         movingButton.setPos(width,250);
 	}
     
@@ -92,37 +93,40 @@ public class BaseScene {
 
     
     public boolean touchDown(int screenX, int screenY, int pointer) {
-        Vector2 cord = view.unproject(new Vector2(screenX, screenY));
+        //Vector2 cord = view.unproject(new Vector2(screenX, screenY));
         for(Button element : Elements){
-            element.touchDown(cord.x,cord.y);
+            //element.touchDown(cord.x,cord.y);
         }
-        System.out.println(cord);
+        System.out.println("RealX: " + screenX + ", RealY: " + -(screenY - Gdx.graphics.getHeight()));
+        //System.out.println(cord);
+        //System.out.println(camera.getPickRay(screenX,screenY));
+        //System.out.println(view.getPickRay(screenX,screenY));
         return true;
     }
 
 	public boolean touchUp(int x, int y, int pointer) {
         //Looks kinda shit but idkk how to do it better so far
-        Vector2 cord = view.unproject(new Vector2(x, y));
+        //Vector2 cord = view.unproject(new Vector2(x, y));
 		for(Button element : Elements){
-            element.touchUp(cord.x, cord.y);
+            //element.touchUp(cord.x, cord.y);
         }
 		return true;
 	}
 
 	
 	public boolean touchDragged(int x, int y, int pointers) {
-        Vector2 cord = view.unproject(new Vector2(x, y));
+        //Vector2 cord = view.unproject(new Vector2(x, y));
         for(Button element : Elements){
-            element.touchDragged(cord.x, cord.y);
+            //element.touchDragged(cord.x, cord.y);
         }
 		return true;
 	}
 
     
     public boolean mouseMoved(int screenX, int screenY) {
-        Vector2 cord = view.unproject(new Vector2(screenX, screenY));
+        //Vector2 cord = view.unproject(new Vector2(screenX, screenY));
         for(Button element : Elements){
-            element.mouseMoved(cord.x, cord.y);
+           // element.mouseMoved(cord.x, cord.y);
         }
         return true;
     }

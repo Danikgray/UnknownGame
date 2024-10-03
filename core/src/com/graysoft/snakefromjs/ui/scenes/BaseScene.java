@@ -67,7 +67,7 @@ public class BaseScene {
     
     public void resize (int width, int height) {
 		view.update(width,height,true);
-        movingButton.setPos(width,250);
+        movingButton.setPos(view.unproject(new Vector2(width,height)).x-100,250);
 	}
     
     public void dispose () {
@@ -96,6 +96,7 @@ public class BaseScene {
         for(Button element : Elements){
             element.touchDown(cord.x,cord.y);
         }
+        movingButton.touchDown(cord.x,cord.y);
         System.out.println(cord);
         return true;
     }
@@ -106,6 +107,7 @@ public class BaseScene {
 		for(Button element : Elements){
             element.touchUp(cord.x, cord.y);
         }
+        movingButton.touchUp(cord.x,cord.y);
 		return true;
 	}
 
@@ -115,6 +117,7 @@ public class BaseScene {
         for(Button element : Elements){
             element.touchDragged(cord.x, cord.y);
         }
+        movingButton.touchDragged(cord.x,cord.y);
 		return true;
 	}
 
